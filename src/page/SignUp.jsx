@@ -15,6 +15,7 @@ import {auth} from "../firebaseConfig"
 import GoogleIcon from '@mui/icons-material/Google';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import '../assert/auth.css'
 
 export const SignUp = () => {
 

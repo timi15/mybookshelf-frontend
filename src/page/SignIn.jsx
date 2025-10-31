@@ -15,6 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import GoogleIcon from "@mui/icons-material/Google";
 import {PasswordReset} from "../component/PasswordReset";
 import {auth} from "../firebaseConfig";
+import '../assert/auth.css'
 
 export const SignIn = () => {
 
