@@ -1,71 +1,50 @@
-import React, {useState} from 'react'
-import {signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import React, {useContext, useState} from 'react';
 import {
     Box, Button,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
     TextField,
     Typography
 } from "@mui/material";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
 import GoogleIcon from "@mui/icons-material/Google";
+import {Link, useNavigate} from "react-router-dom";
 import {PasswordReset} from "../component/PasswordReset";
+import {PasswordField} from "../component/PasswordField";
 import {auth} from "../firebaseConfig";
+import {AuthContext} from "../context/auth/Auth";
 import '../assert/auth.css'
 
 export const SignIn = () => {
 
-    const provider = new GoogleAuthProvider();
+    const {signInWithEmail, signInWithGoogle} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
-    const [showPassword, setShowPassword] = useState(false);
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const handleMouseUpPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const signInWithEmailAndPasswordFun = async (e) => {
+    const handleSubmitEmailAndPassword = async (e) => {
         e.preventDefault();
-
-        signInWithEmailAndPassword(auth, formData.email, formData.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user)
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, " ", errorMessage);
-            });
+        try {
+            const userCredential = await signInWithEmail(formData.email, formData.password);
+            setFormData({email: '', password: ''});
+            navigate("/home");
+        } catch (error) {
+            console.error("Sign up error:", error.code, error.message);
+        }
     }
 
-    const signInWithGoogle = async () => {
-        await signInWithPopup(auth, provider)
-            .then((result) => {
-
-                //const credential = GoogleAuthProvider.credentialFromResult(result);
-                const user = result.user;
-
-            }).catch((error) => {
-
-            });
+    const handleSubmitGoogle = async () => {
+        try {
+            await signInWithGoogle();
+            if (auth.currentUser) navigate("/home");
+        } catch (error) {
+            console.error("Google sign up error:", error);
+        }
     }
 
     return (
@@ -74,7 +53,7 @@ export const SignIn = () => {
             <Box
                 className="form"
                 component="form"
-                onSubmit={signInWithEmailAndPasswordFun}
+                onSubmit={handleSubmitEmailAndPassword}
                 autoComplete="off">
 
                 <Typography variant="h3">
@@ -92,34 +71,12 @@ export const SignIn = () => {
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
 
-                <FormControl variant="outlined" required>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <OutlinedInput
-                        id="password"
-                        name="password"
-                        label="Password"
-                        value={formData.password}
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    className="password-show-icon"
-                                    aria-label={
-                                        showPassword ? 'hide the password' : 'display the password'
-                                    }
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    onMouseUp={handleMouseUpPassword}
-                                    edge="end"
-
-                                >
-                                    {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+                <PasswordField
+                    name="password"
+                    label="Password"
+                    value={formData.password}
+                    onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
+                />
 
                 <div style={{textAlign: 'right'}}>
                     <Button
@@ -133,13 +90,13 @@ export const SignIn = () => {
                     size="large"
                     variant="contained"
                     type="submit">
-                    Sing In
+                    Sign In
                 </Button>
 
-                <Typography
-                    variant="body1">
+                <Link to="/sign-up"
+                      variant="body1">
                     Don't have an account? Sign Up!
-                </Typography>
+                </Link>
 
                 <div className="divider">
                     <span>or</span>
@@ -148,9 +105,9 @@ export const SignIn = () => {
                 <Button
                     size="large"
                     variant="contained"
-                    onClick={signInWithGoogle}
+                    onClick={handleSubmitGoogle}
                 >
-                    <GoogleIcon className="google-icon" fontSize="medium"/> Sing In with Google
+                    <GoogleIcon className="google-icon" fontSize="medium"/> Sign In with Google
                 </Button>
 
             </Box>
