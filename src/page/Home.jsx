@@ -1,6 +1,9 @@
 import React from 'react';
 import {useQuery} from "@tanstack/react-query";
 import {Skeleton} from "@mui/material";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import '../assert/home.css'
 
 const normalizeTitle = (title) => {
     return title
@@ -63,6 +66,40 @@ const fetchAllGenres = async (genres) => {
     return results;
 };
 
+const responsive = {
+    xxl: {
+        breakpoint: {max: 3000, min: 1400},
+        items: 6,
+        slidesToSlide: 5
+    },
+    xl: {
+        breakpoint: {max: 1400, min: 1300},
+        items: 5,
+        slidesToSlide: 4
+    },
+    lg: {
+        breakpoint: {max: 1300, min: 900},
+        items: 4,
+        slidesToSlide: 3
+    },
+    md: {
+        breakpoint: {max: 900, min: 0},
+        items: 3,
+        slidesToSlide: 2
+    },
+    sm: {
+        breakpoint: {max: 600, min: 300},
+        items: 2,
+        slidesToSlide: 1
+    },
+    xs: {
+        breakpoint: {max: 400, min: 0},
+        items: 1,
+        slidesToSlide: 1
+    }
+
+};
+
 export const Home = () => {
     const {data, isLoading, isFetching, isError} = useQuery({
         queryKey: ["allGenresBooks"],
@@ -75,7 +112,6 @@ export const Home = () => {
     if (isLoading || isFetching) {
         return (
             <div style={{padding: "2rem"}}>
-                <h1 style={{textAlign: "center", marginBottom: "2rem"}}>books</h1>
                 {[...Array(6)].map((_, i) => (
                     <div key={i} style={{marginBottom: "3rem"}}>
                         <Skeleton variant="text" width="20%" height={40}/>
@@ -91,10 +127,8 @@ export const Home = () => {
                                 <div
                                     key={j}
                                     style={{
-                                        border: "1px solid #ddd",
                                         borderRadius: "8px",
                                         padding: "0.5rem",
-                                        backgroundColor: "#fafafa",
                                     }}
                                 >
                                     <Skeleton
@@ -117,9 +151,6 @@ export const Home = () => {
 
     return (
         <div style={{padding: "2rem"}}>
-            <h1 style={{textAlign: "center", marginBottom: "2rem"}}>
-                books
-            </h1>
 
             {data.map(({genre, books}) => (
                 <div key={genre} style={{marginBottom: "3rem"}}>
@@ -127,41 +158,30 @@ export const Home = () => {
                         {genre}
                     </h2>
                     <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-                            gap: "1rem",
-                        }}
                     >
-                        {books?.length > 0 ? (
-                            books.map((book) => (
-                                <div
-                                    key={book.id}
-                                    style={{
-                                        border: "1px solid #ddd",
-                                        borderRadius: "8px",
-                                        padding: "0.5rem",
-                                        textAlign: "center",
-                                        backgroundColor: "#fafafa",
-                                        transition: "transform 0.2s ease",
-                                    }}
-                                >
+                        <Carousel
+                            swipeable={false}
+                            draggable={false}
+                            responsive={responsive}
+                            infinite={true}
+                            transitionDuration={100}
+                            containerClass="carousel-container"
+                            itemClass="carousel-item"
+                        >
+                            {books?.length > 0 ? (
+                                books.map((book) => (
                                     <img
+                                        key={book.id}
                                         src={book.image}
                                         alt={book.title}
-                                        style={{
-                                            width: "100%",
-                                            height: "200px",
-                                            objectFit: "cover",
-                                            borderRadius: "4px",
-                                        }}
+                                        style={{}}
                                     />
+                                ))
+                            ) : (
+                                <p>no books</p>
+                            )}
+                        </Carousel>
 
-                                </div>
-                            ))
-                        ) : (
-                            <p>no books</p>
-                        )}
                     </div>
                 </div>
             ))}
