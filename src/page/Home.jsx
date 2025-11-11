@@ -1,5 +1,6 @@
 import React from 'react';
 import {useQuery} from "@tanstack/react-query";
+import {Skeleton} from "@mui/material";
 
 const normalizeTitle = (title) => {
     return title
@@ -63,14 +64,55 @@ const fetchAllGenres = async (genres) => {
 };
 
 export const Home = () => {
-    const {data, isLoading, isError} = useQuery({
+    const {data, isLoading, isFetching, isError} = useQuery({
         queryKey: ["allGenresBooks"],
         queryFn: () => fetchAllGenres(["romance", "fantasy", "mystery", "fiction", "horror", "thriller", "erotica"]),
         staleTime: 1000 * 60 * 60 * 12,
         cacheTime: 1000 * 60 * 60 * 24,
     });
 
-    if (isLoading) return <div> loading </div>;
+
+    if (isLoading || isFetching) {
+        return (
+            <div style={{padding: "2rem"}}>
+                <h1 style={{textAlign: "center", marginBottom: "2rem"}}>books</h1>
+                {[...Array(6)].map((_, i) => (
+                    <div key={i} style={{marginBottom: "3rem"}}>
+                        <Skeleton variant="text" width="20%" height={40}/>
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+                                gap: "1rem",
+                                marginTop: "1rem",
+                            }}
+                        >
+                            {[...Array(8)].map((_, j) => (
+                                <div
+                                    key={j}
+                                    style={{
+                                        border: "1px solid #ddd",
+                                        borderRadius: "8px",
+                                        padding: "0.5rem",
+                                        backgroundColor: "#fafafa",
+                                    }}
+                                >
+                                    <Skeleton
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={200}
+                                        style={{borderRadius: "4px"}}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+
     if (isError) return <div>error</div>;
 
     return (
@@ -114,11 +156,6 @@ export const Home = () => {
                                             borderRadius: "4px",
                                         }}
                                     />
-                                    <p style={{fontWeight: "bold", marginTop: "0.5rem"}}>{book.title}</p>
-                                    <p style={{marginTop: "0.5rem"}}>{book.genres}</p>
-                                    <p style={{fontSize: "0.9rem", color: "#666"}}>
-                                        {book.authors?.[0]?.name ?? "Ismeretlen szerző"}
-                                    </p>
 
                                 </div>
                             ))
