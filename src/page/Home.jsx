@@ -3,7 +3,7 @@ import {useQuery} from "@tanstack/react-query";
 import {Skeleton} from "@mui/material";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import '../assert/home.css'
+import {BookCard} from "../component/BookCard";
 
 const normalizeTitle = (title) => {
     return title
@@ -68,13 +68,13 @@ const fetchAllGenres = async (genres) => {
 
 const responsive = {
     xxl: {
-        breakpoint: {max: 3000, min: 1400},
-        items: 6,
+        breakpoint: {max: 3000, min: 1500},
+        items: 7,
         slidesToSlide: 5
     },
     xl: {
-        breakpoint: {max: 1400, min: 1300},
-        items: 5,
+        breakpoint: {max: 1500, min: 1300},
+        items: 6,
         slidesToSlide: 4
     },
     lg: {
@@ -170,12 +170,7 @@ export const Home = () => {
                         >
                             {books?.length > 0 ? (
                                 books.map((book) => (
-                                    <img
-                                        key={book.id}
-                                        src={book.image}
-                                        alt={book.title}
-                                        style={{}}
-                                    />
+                                    <BookCard key={book.id} book={book} />
                                 ))
                             ) : (
                                 <p>no books</p>

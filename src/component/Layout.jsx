@@ -44,14 +44,14 @@ export const Layout = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = (route = false) => {
+    const handleCloseNavMenu = (route) => {
         if (route) {
             navigate(route);
         }
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = (route = false) => {
+    const handleCloseUserMenu = (route) => {
         if (route) {
             navigate(route);
         }
@@ -60,27 +60,9 @@ export const Layout = () => {
 
     return (
         <React.Fragment>
-            <AppBar position="static">
+            <AppBar position="sticky" >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2,
-                                display: {xs: 'none', md: 'flex'},
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            LOGO
-                        </Typography>
 
                         <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                             <IconButton
@@ -116,31 +98,13 @@ export const Layout = () => {
                                 ))}
                             </Menu>
                         </Box>
-                        <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
-                        <Typography
-                            variant="h5"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2,
-                                display: {xs: 'flex', md: 'none'},
-                                flexGrow: 1,
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            LOGO
-                        </Typography>
-                        <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+
+                        <Box sx={{flexGrow: 1, justifyContent: "center", display: {xs: 'none', md: 'flex'}}}>
                             {pages.map((page, index) => (
                                 <Button
                                     key={index}
                                     onClick={() => handleCloseNavMenu(page.route)}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    sx={{my: 2, color: 'white', display: 'block', marginRight: '3rem'}}
                                 >
                                     {page.name}
                                 </Button>
