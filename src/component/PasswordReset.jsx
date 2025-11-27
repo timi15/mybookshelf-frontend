@@ -91,7 +91,7 @@ export const PasswordReset = ({open, handleClose}) => {
                         fullWidth
                     />
 
-                    <Button size="large" variant="contained" type="submit" fullWidth onClick={handleClick}>
+                    <Button size="large" variant="contained" type="submit" fullWidth onClick={handleClick} style={{backgroundColor:'#3a4943'}}>
                         Email me
                     </Button>
 

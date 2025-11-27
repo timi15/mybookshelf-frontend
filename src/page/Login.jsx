@@ -5,14 +5,15 @@ import {
     Typography
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import {Link, useNavigate} from "react-router-dom";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
+import Link from '@mui/material/Link';
 import {PasswordReset} from "../component/PasswordReset";
 import {PasswordField} from "../component/PasswordField";
 import {auth} from "../firebaseConfig";
 import {AuthContext} from "../context/auth/Auth";
 import '../assert/auth.css'
 
-export const SignIn = () => {
+export const Login = () => {
 
     const {signInWithEmail, signInWithGoogle} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -51,16 +52,17 @@ export const SignIn = () => {
         <div className='box'>
 
             <Box
-                className="form"
+                className="form-login"
                 component="form"
                 onSubmit={handleSubmitEmailAndPassword}
                 autoComplete="off">
 
                 <Typography variant="h3">
-                    Sign In
+                    Login
                 </Typography>
 
                 <TextField
+                    size="small"
                     id="email"
                     label="Email"
                     name="email"
@@ -79,24 +81,33 @@ export const SignIn = () => {
                 />
 
                 <div style={{textAlign: 'right'}}>
-                    <Button
-                        variant="text"
-                        onClick={handleOpen}>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        underline="hover"
+                        onClick={handleOpen}
+                        className="forgot-psw"
+                        sx={{ cursor: "pointer" }}
+                    >
                         Forgot password?
-                    </Button>
+                    </Link>
                 </div>
 
                 <Button
                     size="large"
                     variant="contained"
-                    type="submit">
-                    Sign In
+                    type="submit"
+                    style={{backgroundColor: "#3a4943"}}
+                >
+                    Login
                 </Button>
 
-                <Link to="/sign-up"
-                      variant="body1">
-                    Don't have an account? Sign Up!
-                </Link>
+                <div className="link-container">
+                    <RouterLink className="link" to="/sign-up"
+                          variant="body1">
+                        Don't have an account? Sign Up!
+                    </RouterLink>
+                </div>
 
                 <div className="divider">
                     <span>or</span>
@@ -106,8 +117,9 @@ export const SignIn = () => {
                     size="large"
                     variant="contained"
                     onClick={handleSubmitGoogle}
+                    style={{backgroundColor: "#3a4943"}}
                 >
-                    <GoogleIcon className="google-icon" fontSize="medium"/> Sign In with Google
+                    <GoogleIcon className="google-icon" fontSize="medium"/> Login with Google
                 </Button>
 
             </Box>

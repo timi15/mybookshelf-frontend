@@ -4,7 +4,7 @@ import {Home} from "./page/Home";
 import {Favourites} from "./page/Favourites";
 import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
-import {SignIn} from "./page/SignIn";
+import {Login} from "./page/Login";
 import {SignUp} from "./page/SignUp";
 import {ProtectedRoute} from "./component/ProtectedRoute";
 
@@ -15,7 +15,7 @@ function App() {
             <Routes>
 
                 <Route path="/" element={<Navigate to="/sign-in" replace/>}/>
-                <Route path="/sign-in" element={<SignIn/>}/>
+                <Route path="/sign-in" element={<Login/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
 
 

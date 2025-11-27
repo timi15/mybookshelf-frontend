@@ -47,7 +47,7 @@ export const SignUp = () => {
         <div className='box'>
 
             <Box
-                className="form"
+                className="form-login"
                 component="form"
                 onSubmit={handleSubmitEmailAndPassword}
                 autoComplete="off">
@@ -57,6 +57,7 @@ export const SignUp = () => {
                 </Typography>
 
                 <TextField
+                    size="small"
                     id="name"
                     label="Name"
                     name="name"
@@ -68,6 +69,7 @@ export const SignUp = () => {
                 />
 
                 <TextField
+                    size="small"
                     id="email"
                     label="Email"
                     name="email"
@@ -88,14 +90,18 @@ export const SignUp = () => {
                 <Button
                     size="large"
                     variant="contained"
-                    type="submit">
+                    type="submit"
+                    style={{backgroundColor: "#3a4943"}}
+                >
                     Sign Up
                 </Button>
 
-                <Link to="/sign-in"
-                      variant="body1">
-                    Already have an account? Sign In!
-                </Link>
+                <div className="link-container">
+                    <Link className="link" to="/sign-in"
+                          variant="body1">
+                        Already have an account? Login!
+                    </Link>
+                </div>
 
                 <div className="divider">
                     <span>or</span>
@@ -104,8 +110,9 @@ export const SignUp = () => {
                 <Button
                     size="large"
                     variant="contained"
+                    style={{backgroundColor: "#3a4943"}}
                     onClick={handleSubmitGoogle}>
-                    <GoogleIcon className="google-icon" fontSize="medium"/> Sign Inl with Google
+                    <GoogleIcon className="google-icon" fontSize="medium"/> Login with Google
                 </Button>
 
             </Box>

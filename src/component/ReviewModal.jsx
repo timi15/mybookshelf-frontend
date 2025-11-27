@@ -3,6 +3,9 @@ import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import "../assert/modal.css"
+import "../assert/common.css"
+import {ReviewContext} from "../context/review/Review";
+import placeholder from "../assert/img/placeholder.jpg"
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
@@ -10,6 +13,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
     const [formData, setFormData] = useState({})
     const [rate, setRate] = React.useState(2);
     const {idToken} = useContext(AuthContext);
+    const {handleAddReview} = useContext(ReviewContext);
 
 
     const handleSubmit = (e) => {
@@ -26,6 +30,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
             .then(res => {
                 if (res.status === 201) {
                     console.log(res.data)
+                    handleAddReview(res.data)
                 }
             })
 
@@ -38,154 +43,236 @@ export const ReviewModal = ({book = {}, open, close}) => {
         <Modal
             open={open}
             onClose={close}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box
-                className="form modal-style"
+                className="modal-style"
                 component="form"
                 onSubmit={handleSubmit}
                 autoComplete="off"
                 sx={{
+                    display: "flex",
+                    gap: 3,
+
+                    flexDirection: "column",
+
+                    "@media (min-width:1000px)": {
+                        flexDirection: "row"
+                    },
+
                     scrollbarWidth: "none",
-                    "&::-webkit-scrollbar": {
-                        display: "none",
+                    "&::-webkit-scrollbar": {display: "none"}
                 }}
-        }
             >
 
-            <TextField
-                label="ISBN13"
-                disabled={book}
-                fullWidth
-                id="isbn13"
-                name="isbn13"
-                value={book.isbn13 || formData.isbn13}
-                type="text"
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-            />
 
-            <TextField
-                disabled={book}
-                label="Image"
-                fullWidth
-                id="image"
-                name="image"
-                value={book.image || formData.image}
-                type="text"
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-            />
+                <Box
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
 
-            <TextField
-                disabled={book}
-                label="Title"
-                fullWidth
-                id="title"
-                name="title"
-                value={book.title || formData.title}
-                type="text"
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-            />
+                        order: -1,
 
-            <TextField
-                disabled={book}
-                label="Author"
-                fullWidth
-                id="author"
-                name="author"
-                value={book.author || formData.author}
-                type="text"
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-            />
-
-
-            <TextField
-                disabled={book}
-                label="Plot"
-                multiline
-                rows={2}
-                fullWidth
-                id="plot"
-                name="plot"
-                value={book.plot || formData.plot}
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-
-            />
-
-            <div style={{margin: 'auto', paddingBottom: '1.5rem'}}>
-                <Rating
-                    name="rating"
-                    value={rate}
-                    onChange={(event, newValue) => {
-                        setRate(newValue);
-                    }}
-                />
-            </div>
-
-            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", gap: "20px"}}>
-
-                <TextField
-                    fullWidth
-                    id="startDate"
-                    name="startDate"
-                    value={formData.startDate}
-                    type="date"
-                    required
-                    slotProps={{
-                        input: {
-                            inputProps: {
-                                max: new Date().toISOString().split("T")[0]
-                            }
+                        "@media (min-width:1000px)": {
+                            width: "40%",
+                            order: 0
                         }
                     }}
-                    onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-                />
+                >
+
+                    <img
+                        src={formData.image || book.image || placeholder}
+                        alt="Preview"
+                        style={{
+                            width: "50%",
+                            objectFit: "cover",
+                            borderRadius: "8px"
+                        }}
+                        onError={(e) => {
+                            e.currentTarget.src = placeholder;
+                        }}
+                    />
+
+                    <Rating
+                        name="rating"
+                        value={rate}
+                        onChange={(event, newValue) => setRate(newValue)}
+                        size="large"
+                        style={{margin: "2rem"}}
+                    />
+                </Box>
 
 
-                <TextField
-                    fullWidth
-                    id="finishDate"
-                    name="finishDate"
-                    value={formData.finishDate}
-                    type="date"
-                    required
-                    slotProps={{
-                        input: {
-                            inputProps: {
-                                min: formData.startDate || "",
-                                max: new Date().toISOString().split("T")[0]
-                            }
-                        }
+                <Box
+                    sx={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "column"
                     }}
-                    onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-                />
+                >
+                    {Object.keys(book).length === 0 && (
 
-            </div>
+                        <Box sx={{display: "flex", gap: 2}}>
+                            <TextField
+                                size="small"
+                                label="ISBN13"
+                                fullWidth
+                                id="isbn13"
+                                name="isbn13"
+                                value={formData.isbn13}
+                                type="text"
+                                required
+                                onChange={({target}) =>
+                                    setFormData({...formData, [target.name]: target.value})
+                                }
+                            />
+
+                            <TextField
+                                size="small"
+                                label="Image URL"
+                                fullWidth
+                                id="image"
+                                name="image"
+                                value={formData.image}
+                                type="text"
+                                required
+                                onChange={({target}) =>
+                                    setFormData({...formData, [target.name]: target.value})
+                                }
+                            />
+                        </Box>
+                    )}
+
+                    {Object.keys(book).length !== 0 && (
+                        <>
+                            <Typography variant="h5" fontWeight="bold">
+                                {book.title}
+                            </Typography>
+
+                            <Typography
+                                variant="6"
+                                sx={{mb: 5}}
+                            >
+                                {book.author}
+                            </Typography>
+                        </>
+                    )}
+
+                    {Object.keys(book).length === 0 && (
+                        <Box sx={{display: "flex", gap: 2}}>
+
+                            <TextField
+                                label="Title"
+                                size="small"
+                                fullWidth
+                                id="title"
+                                name="title"
+                                value={formData.title}
+                                type="text"
+                                required
+                                onChange={({target}) =>
+                                    setFormData({...formData, [target.name]: target.value})
+                                }
+                            />
+
+                            <TextField
+                                label="Author"
+                                size="small"
+                                fullWidth
+                                id="author"
+                                name="author"
+                                value={formData.author}
+                                type="text"
+                                required
+                                onChange={({target}) =>
+                                    setFormData({...formData, [target.name]: target.value})
+                                }
+                            />
+                        </Box>
+                    )}
+
+                    <TextField
+                        size="small"
+                        label="Plot"
+                        multiline
+                        rows={2}
+                        fullWidth
+                        id="plot"
+                        name="plot"
+                        value={book.plot || formData.plot}
+                        required
+                        onChange={({target}) =>
+                            setFormData({...formData, [target.name]: target.value})
+                        }
+                    />
+
+                    <Box sx={{display: "flex", gap: 2}}>
+                        <TextField
+                            size="small"
+                            fullWidth
+                            id="startDate"
+                            name="startDate"
+                            value={formData.startDate}
+                            type="date"
+                            required
+                            slotProps={{
+                                input: {
+                                    inputProps: {
+                                        max: new Date().toISOString().split("T")[0]
+                                    }
+                                }
+                            }}
+                            onChange={({target}) =>
+                                setFormData({...formData, [target.name]: target.value})
+                            }
+                        />
+
+                        <TextField
+                            fullWidth
+                            size="small"
+                            id="finishDate"
+                            name="finishDate"
+                            value={formData.finishDate}
+                            type="date"
+                            required
+                            slotProps={{
+                                input: {
+                                    inputProps: {
+                                        min: formData.startDate || "",
+                                        max: new Date().toISOString().split("T")[0]
+                                    }
+                                }
+                            }}
+                            onChange={({target}) =>
+                                setFormData({...formData, [target.name]: target.value})
+                            }
+                        />
+                    </Box>
+
+                    <TextField
+                        size="small"
+                        multiline
+                        rows={2}
+                        fullWidth
+                        id="reflection"
+                        label="Reflection"
+                        name="reflection"
+                        value={formData.reflection}
+                        required
+                        onChange={({target}) =>
+                            setFormData({...formData, [target.name]: target.value})
+                        }
+                    />
+
+                    <Button type="submit" variant="contained" size="large" style={{backgroundColor:"#3a4943"}}>
+                        Save
+                    </Button>
+                </Box>
+
+            </Box>
+        </Modal>
 
 
-            <TextField
-                multiline
-                rows={2}
-                fullWidth
-                id="reflection"
-                label="Reflection"
-                name="reflection"
-                value={formData.reflection}
-                required
-                onChange={({target}) => setFormData({...formData, [target.name]: target.value})}
-
-            />
-
-            <Button type="submit" variant="contained" size="large">
-                Save
-            </Button>
-
-        </Box>
-</Modal>
-)
+    )
 }

@@ -18,8 +18,9 @@ export const PasswordField = ({name, label, value, onChange, required}) => {
 
     return (
         <FormControl variant="outlined" required={required}>
-            <InputLabel htmlFor={name}>Password</InputLabel>
+            <InputLabel size="small" htmlFor={name}>Password</InputLabel>
             <OutlinedInput
+                size="small"
                 id={name}
                 name={name}
                 label={label}

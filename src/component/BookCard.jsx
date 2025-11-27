@@ -2,10 +2,8 @@ import React, {useState} from "react";
 import {
     Card,
     CardMedia,
-    CardContent,
     Box,
-    Typography,
-    IconButton,
+    IconButton, Skeleton,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
@@ -19,8 +17,6 @@ export const BookCard = ({book}) => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const LIMIT = 120;
 
     return (
         <>
@@ -39,16 +35,28 @@ export const BookCard = ({book}) => {
                 }}
             >
 
-                <CardMedia
-                    component="img"
-                    src={book.image}
-                    alt={book.title}
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                    }}
-                />
+                {!book.image ? (
+                    <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="100%"
+                        sx={{borderRadius: 2}}
+                    />
+                ) : (
+                    <CardMedia
+                        component="img"
+                        src={book.image}
+                        alt={book.title}
+                        loading="lazy"
+                        decoding="async"
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: 2,
+                        }}
+                    />
+                )}
 
                 <Box
                     sx={{
@@ -81,34 +89,6 @@ export const BookCard = ({book}) => {
 
                 </Box>
 
-                {
-                    book.description && (
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                bottom: 0,
-                                left: 0,
-                                width: "100%",
-                                background: "rgba(0,0,0,0.75)",
-                                color: "white",
-                                opacity: hover ? 1 : 0,
-                                transform: hover ? "translateY(0)" : "translateY(30px)",
-                                transition: "opacity 0.25s ease, transform 0.25s ease",
-                            }}
-                        >
-                            <CardContent sx={{
-                                paddingBottom: "0 !important"
-                            }}>
-                                <Typography variant="h6">
-                                    {book.plot.length > LIMIT
-                                        ? `${book.plot.slice(0, LIMIT)}...`
-                                        : book.plot}
-                                </Typography>
-
-                            </CardContent>
-                        </Box>
-                    )
-                }
             </Card>
 
             <ReviewModal book={book} open={open} close={handleClose}/>

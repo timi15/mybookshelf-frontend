@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Playwrite+US+Trad+Guides&display=swap');
+
 .MuiOutlinedInput-root {
     margin-bottom: 2em !important;
 }
 
-
 .MuiTypography-h3{
-    margin-bottom: 2em !important;
+    margin-bottom: 1em !important;
     text-align: center;
-    font-weight: bold !important;
+    font-family: "Berkshire Swash", serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
 }
 
 .MuiTypography-body1{
@@ -19,6 +22,9 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-image: url(../assert/img/welcome_page.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .password-show-icon{
@@ -33,7 +39,7 @@
     display: flex;
     align-items: center;
     text-align: center;
-    color: #888;
+    color: rgba(0, 0, 0, 0.44);
     margin: 2em 0 3em 0;
 }
 
@@ -41,7 +47,7 @@
 .divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.34);
 }
 
 .divider:not(:empty)::before {
@@ -52,11 +58,30 @@
     margin-left: .75em;
 }
 
-.form{
+.form-login{
     width: 35em;
     display: flex;
     flex-direction: column;
-    background-color: beige;
-    padding: 5em;
-    border-radius: 3em;
+    background-color: #ccd6cc;
+    padding: 3em;
+    border-radius: 2em;
+}
+
+.link{
+    color: #3a4943;
+}
+
+.link:active{
+    color: white;
+}
+
+.link-container{
+    text-align: right;
+    margin-top: 2em;
+}
+
+.forgot-psw{
+    color: #3a4943;
+    margin-bottom: 1em;
+    text-decoration: underline;
 }
