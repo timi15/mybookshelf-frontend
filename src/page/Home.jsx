@@ -7,7 +7,7 @@ import "../assert/home.css"
 
 export const Home = () => {
 
-    const {data} = useContext(BookContext);
+    const { data, isLoading, isError } = useContext(BookContext);
 
     const responsive = {
         xxl: {breakpoint: {max: 3000, min: 1500}, items: 7},
@@ -17,6 +17,9 @@ export const Home = () => {
         sm: {breakpoint: {max: 600, min: 300}, items: 2},
         xs: {breakpoint: {max: 400, min: 0}, items: 1}
     };
+
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error loading books</div>;
 
     return (
         <div >

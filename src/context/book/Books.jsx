@@ -1,40 +1,38 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, { createContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const BookContext = createContext();
 
-export const Books = ({children}) => {
+export const Books = ({ children }) => {
 
-    const [data, setData] = useState([]);
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["nyt-books"],
+        queryFn: async () => {
+            const res = await axios.get(
+                `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.REACT_APP_BOOK_API_KEY}`
+            );
 
-    useEffect(() => {
-        axios.get(
-            `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.REACT_APP_BOOK_API_KEY}`
-        )
-            .then(res => {
-                const lists = res.data.results.lists;
+            const lists = res.data.results.lists;
 
-                console.log(lists);
+            const formatted = lists.map((list) => ({
+                genre: list.display_name,
+                books: list.books.map((b) => ({
+                    isbn13: b.primary_isbn13,
+                    title: b.title,
+                    image: b.book_image,
+                    author: b.author,
+                    plot: b.description,
+                })),
+            }));
 
-                const formatted = lists.map((list) => ({
-                    genre: list.display_name,
-                    books: list.books.map((b) => ({
-                        isbn13: b.primary_isbn13,
-                        title: b.title,
-                        image: b.book_image,
-                        author: b.author,
-                        plot: b.description
-                    }))
-                }));
+            return formatted;
+        },
+    });
 
-                console.log(formatted);
-                setData(formatted);
-            })
-            .catch(err => console.error(err));
-    }, []);
     return (
-        <BookContext.Provider value={{data}}>
+        <BookContext.Provider value={{ data, isLoading, isError }}>
             {children}
         </BookContext.Provider>
-    )
-}
+    );
+};
