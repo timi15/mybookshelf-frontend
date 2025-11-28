@@ -31,17 +31,39 @@ export const Review = ({children}) => {
         setReviews(prev => [...prev, review]);
     };
 
+    const handleUpdateReview = async (isbn13, review) => {
+        setReviews(prev =>
+            prev.map(r => r.isbn13 === isbn13 ? { ...r, ...review } : r)
+        );
+
+        try {
+            await axios.put(
+                `http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`,
+                review,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${idToken}`
+                    }
+                }
+            );
+            return true;
+
+        } catch (err) {
+            return false;
+        }
+    };
+
+
     const handleRemoveReview = async (isbn13) => {
         setReviews(prev => prev.filter((value) => value.isbn13 !== isbn13));
         try {
             await axios
                 .delete(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
                     headers: {
-                        Authorization: `Bearer ${idToken}`
+                        "Authorization": `Bearer ${idToken}`
                     }
                 });
-
-            console.log(idToken);
 
             return true;
 
@@ -52,7 +74,7 @@ export const Review = ({children}) => {
     };
 
     return (
-        <ReviewContext.Provider value={{reviews, handleAddReview, handleRemoveReview}}>
+        <ReviewContext.Provider value={{reviews, handleAddReview, handleUpdateReview, handleRemoveReview}}>
             {children}
         </ReviewContext.Provider>
     )

@@ -1,43 +1,55 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
-import "../assert/modal.css"
-import "../assert/common.css"
 import {ReviewContext} from "../context/review/Review";
 import placeholder from "../assert/img/placeholder.jpg"
-import {useNavigate} from "react-router-dom";
 
-export const ReviewModal = ({book = {}, open, close}) => {
+export const ModifyReviewModal = ({isbn13, open, close}) => {
 
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({})
-    const [rate, setRate] = React.useState(2);
     const {idToken} = useContext(AuthContext);
-    const {handleAddReview} = useContext(ReviewContext);
+    const {handleUpdateReview} = useContext(ReviewContext);
+
+    const [currentReview, setCurrentReview] = useState({});
+    const [formData, setFormData] = useState({
+        plot: "",
+        rate: 0,
+        startDate: "",
+        finishDate: "",
+        reflection: "",
+    });
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const submit = {...book, rate, ...formData}
+    useEffect(() => {
+        if (!isbn13) return;
         axios
-            .post('http://localhost:8080/v1/mybookshelf/book-review/save', submit, {
+            .get(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${idToken}`
                 }
             })
             .then(res => {
-                if (res.status === 201) {
-                    handleAddReview(res.data);
-                    close();
-                    navigate("/book-reviews")
+                const data = res.data;
 
-                }
-            })
-    };
+                setCurrentReview(data);
+                setFormData({
+                    plot: data.plot || "",
+                    rate: Number(data.rate) || 0,
+                    startDate: data.startDate || "",
+                    finishDate: data.finishDate || "",
+                    reflection: data.reflection || "",
+                });
+            });
+    }, [isbn13, idToken]);
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const success = await handleUpdateReview(isbn13, formData);
+        if(success){
+            close();
+        }
+    }
 
     return (
         <Modal
@@ -71,6 +83,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        justifyContent:"center",
 
                         order: -1,
 
@@ -82,7 +95,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                 >
 
                     <img
-                        src={formData.image || book.image || placeholder}
+                        src={currentReview.image}
                         alt="Preview"
                         style={{
                             width: "50%",
@@ -96,8 +109,10 @@ export const ReviewModal = ({book = {}, open, close}) => {
 
                     <Rating
                         name="rating"
-                        value={rate}
-                        onChange={(event, newValue) => setRate(newValue)}
+                        value={formData.rate}
+                        onChange={(event, newValue) => {
+                            setFormData({...formData, rate: newValue});
+                        }}
                         size="large"
                         style={{margin: "2rem"}}
                     />
@@ -111,86 +126,29 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         flexDirection: "column"
                     }}
                 >
-                    {Object.keys(book).length === 0 && (
 
-                        <Box sx={{display: "flex", gap: 2}}>
-                            <TextField
-                                size="small"
-                                label="ISBN13"
-                                fullWidth
-                                id="isbn13"
-                                name="isbn13"
-                                value={formData.isbn13}
-                                type="text"
-                                required
-                                onChange={({target}) =>
-                                    setFormData({...formData, [target.name]: target.value})
-                                }
-                            />
 
-                            <TextField
-                                size="small"
-                                label="Image URL"
-                                fullWidth
-                                id="image"
-                                name="image"
-                                value={formData.image}
-                                type="text"
-                                required
-                                onChange={({target}) =>
-                                    setFormData({...formData, [target.name]: target.value})
-                                }
-                            />
-                        </Box>
-                    )}
+                    <Box sx={{display: "flex", gap: 2}}>
 
-                    {Object.keys(book).length !== 0 && (
-                        <>
-                            <Typography variant="h5" fontWeight="bold">
-                                {book.title}
-                            </Typography>
+                        <Typography variant="h5" fontWeight="bold">
+                                {currentReview.isbn13}
+                        </Typography>
 
-                            <Typography
-                                variant="6"
-                                sx={{mb: 5}}
-                            >
-                                {book.author}
-                            </Typography>
-                        </>
-                    )}
 
-                    {Object.keys(book).length === 0 && (
-                        <Box sx={{display: "flex", gap: 2}}>
+                    </Box>
 
-                            <TextField
-                                label="Title"
-                                size="small"
-                                fullWidth
-                                id="title"
-                                name="title"
-                                value={formData.title}
-                                type="text"
-                                required
-                                onChange={({target}) =>
-                                    setFormData({...formData, [target.name]: target.value})
-                                }
-                            />
 
-                            <TextField
-                                label="Author"
-                                size="small"
-                                fullWidth
-                                id="author"
-                                name="author"
-                                value={formData.author}
-                                type="text"
-                                required
-                                onChange={({target}) =>
-                                    setFormData({...formData, [target.name]: target.value})
-                                }
-                            />
-                        </Box>
-                    )}
+                    <Typography variant="h5" fontWeight="bold">
+                        {currentReview.title}
+                    </Typography>
+
+                    <Typography
+                        variant="6"
+                        sx={{mb: 5}}
+                    >
+                        {currentReview.author}
+                    </Typography>
+
 
                     <TextField
                         size="small"
@@ -200,7 +158,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         fullWidth
                         id="plot"
                         name="plot"
-                        value={book.plot || formData.plot}
+                        value={formData.plot}
                         required
                         onChange={({target}) =>
                             setFormData({...formData, [target.name]: target.value})
@@ -272,7 +230,5 @@ export const ReviewModal = ({book = {}, open, close}) => {
 
             </Box>
         </Modal>
-
-
     )
 }

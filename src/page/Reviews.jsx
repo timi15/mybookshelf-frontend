@@ -5,26 +5,38 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {ReviewModal} from "../component/ReviewModal";
 import "../assert/common.css"
+import {ModifyReviewModal} from "../component/ModifyReviewModal";
 
 export const Reviews = () => {
 
     const {reviews, handleRemoveReview} = useContext(ReviewContext);
 
-    const [open, setOpen] = useState(false);
+    const [selectedIsbn13, setSelectedIsbn13] = useState(null);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
+    const [openModifyModal, setOpenModifyModal] = useState(false);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpenCreateModal = () => setOpenCreateModal(true);
+    const handleCloseCreateModal = () => setOpenCreateModal(false);
+
+    const handleOpenModifyModal = () => setOpenModifyModal(true);
+    const handleCloseModifyModal = () => setOpenModifyModal(false);
 
 
     return (<>
             <div style={{textAlign: "center"}}>
-                <Button className="btn" style={{marginTop:"3rem", width:"30%", fontSize:"1.2rem", backgroundColor:"#3a4943", color:"white"}} onClick={handleOpen}>
+                <Button className="btn" style={{
+                    marginTop: "3rem",
+                    width: "30%",
+                    fontSize: "1.2rem",
+                    backgroundColor: "#3a4943",
+                    color: "white"
+                }} onClick={handleOpenCreateModal}>
                     Create Review
                 </Button>
 
             </div>
             <div className="container" style={{
-                margin: "3rem",
+                marginTop: "3rem",
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "2rem",
@@ -34,7 +46,7 @@ export const Reviews = () => {
                     reviews.map((review) => (
                         <Card
                             sx={{
-                                width: 250,
+                                width: 300,
                                 borderRadius: 3,
                                 boxShadow: 3,
                                 p: 2,
@@ -45,9 +57,22 @@ export const Reviews = () => {
                             }}
                             key={review.isbn13}
                         >
-                            <Box style={{padding: '1rem'}}>
+                            <Box style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                gap: 1,
+                                marginTop: "auto",
+                                marginBottom: "1.5rem",
+                                paddingLeft: "1rem",
+                                paddingRight: "1rem",
+                                width: '100%',
+                                opacity:'60%'
+                            }}>
                                 <Typography variant="body2" sx={{color: 'text.secondary'}}>
-                                    {review.startDate} - {review.finishDate}
+                                    {review.startDate}
+                                </Typography>
+                                <Typography variant="body2" sx={{color: 'text.secondary'}}>
+                                    {review.finishDate}
                                 </Typography>
                             </Box>
 
@@ -72,35 +97,73 @@ export const Reviews = () => {
                                 />
                             </Box>
 
-                            <CardContent sx={{textAlign: 'center'}}>
+                            <CardContent sx={{textAlign: 'center', flexGrow: 1}}>
                                 <Typography variant="h5" fontWeight="bold">
                                     {review.title}
                                 </Typography>
 
-                                <Typography variant="subtitle2" sx={{color: 'text.secondary', mb: 1}}>
+                                <Typography variant="subtitle2" sx={{mb: 1}}>
                                     {review.author}
                                 </Typography>
 
-                                <Typography variant="body2" sx={{color: 'text.secondary'}}>
+                                <Typography variant="body2" sx={{color: 'text.secondary', mb: 3}}>
                                     {review.plot}
                                 </Typography>
 
-                                <Rating name="read-only" value={review.rate} readOnly/>
+                                <Rating name="read-only" value={review.rate} sx={{mb: 3}} readOnly/>
 
-                                <Typography variant="body2" sx={{color: 'text.secondary'}}>
+                                <Typography variant="body2">
                                     {review.reflection}
                                 </Typography>
                             </CardContent>
 
-                            <CardActions sx={{justifyContent: 'center'}}>
-                                <IconButton color="primary">
-                                    <EditIcon />
-                                </IconButton>
+                            <CardActions
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    gap: 1,
+                                    marginTop: "auto",
+                                    width: '100%'
+                                }}
+                            >
 
-                                <IconButton color="error" onClick={() => handleRemoveReview(review.isbn13)}>
-                                    <DeleteIcon />
-                                </IconButton>
+                                <Box sx={{flex: 1, display: "flex", justifyContent: "flex-start"}}>
+                                    <IconButton
+                                        color="primary"
+                                        onClick={() => {
+                                            setSelectedIsbn13(review.isbn13);
+                                            setOpenModifyModal(true);
+                                        }}
+                                        sx={{
+                                            width: '100%',
+                                            backgroundColor: "#e3f2fd",
+                                            borderRadius: "12px",
+                                            padding: "10px",
+                                            "&:hover": {backgroundColor: "#bbdefb"}
+                                        }}
+                                    >
+                                        <EditIcon/>
+                                    </IconButton>
+                                </Box>
+
+                                <Box sx={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
+                                    <IconButton
+                                        color="error"
+                                        onClick={() => handleRemoveReview(review.isbn13)}
+                                        sx={{
+                                            width: '100%',
+                                            backgroundColor: "#ffebee",
+                                            borderRadius: "12px",
+                                            padding: "10px",
+                                            "&:hover": {backgroundColor: "#ffcdd2"}
+                                        }}
+                                    >
+                                        <DeleteIcon/>
+                                    </IconButton>
+                                </Box>
+
                             </CardActions>
+
 
                         </Card>
 
@@ -108,7 +171,9 @@ export const Reviews = () => {
                 }
 
             </div>
-            <ReviewModal open={open} close={handleClose}/>
+            <ModifyReviewModal isbn13={selectedIsbn13} open={openModifyModal} close={handleCloseModifyModal}/>
+            <ReviewModal open={openCreateModal} close={handleCloseCreateModal}/>
+
         </>
     )
 }

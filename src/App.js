@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import {Layout} from "./component/Layout";
 import {Home} from "./page/Home";
 import {Favourites} from "./page/Favourites";
@@ -11,7 +11,6 @@ import {ProtectedRoute} from "./component/ProtectedRoute";
 function App() {
 
     return (
-        <Router>
             <Routes>
 
                 <Route path="/" element={<Navigate to="/sign-in" replace/>}/>
@@ -26,7 +25,6 @@ function App() {
                     <Route path="/book-reviews" element={<Reviews/>}/>
                 </Route>
             </Routes>
-        </Router>
     );
 }
 
