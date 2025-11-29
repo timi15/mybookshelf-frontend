@@ -23,7 +23,23 @@ export const ReviewModal = ({book = {}, open, close}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const submit = {...book, rate, ...formData}
+        const submit = {
+            isbn13: book.isbn13  || formData.isbn13,
+            book: {
+                isbn13: book.isbn13  || formData.isbn13,
+                title: book.title  || formData.title,
+                author: book.author || formData.author,
+                image: book.image || formData.image,
+                plot: book.plot || formData.plot
+            },
+            rate: rate,
+            startDate: formData.startDate,
+            finishDate: formData.finishDate,
+            reflection: formData.reflection
+        };
+
+        console.log(submit)
+
         axios
             .post('http://localhost:8080/v1/mybookshelf/book-review/save', submit, {
                 headers: {
@@ -35,7 +51,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                 if (res.status === 201) {
                     handleAddReview(res.data);
                     close();
-                    navigate("/book-reviews")
+                    navigate("/reviews")
 
                 }
             })

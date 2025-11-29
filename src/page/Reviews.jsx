@@ -86,8 +86,8 @@ export const Reviews = () => {
                             >
                                 <CardMedia
                                     component="img"
-                                    image={review.image}
-                                    alt={review.title}
+                                    image={review.book.image}
+                                    alt={review.book.title}
                                     sx={{
                                         height: 250,
                                         width: 'auto',
@@ -99,15 +99,15 @@ export const Reviews = () => {
 
                             <CardContent sx={{textAlign: 'center', flexGrow: 1}}>
                                 <Typography variant="h5" fontWeight="bold">
-                                    {review.title}
+                                    {review.book.title}
                                 </Typography>
 
                                 <Typography variant="subtitle2" sx={{mb: 1}}>
-                                    {review.author}
+                                    {review.book.author}
                                 </Typography>
 
                                 <Typography variant="body2" sx={{color: 'text.secondary', mb: 3}}>
-                                    {review.plot}
+                                    {review.book.plot}
                                 </Typography>
 
                                 <Rating name="read-only" value={review.rate} sx={{mb: 3}} readOnly/>

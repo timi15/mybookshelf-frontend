@@ -24,6 +24,7 @@ export const Review = ({children}) => {
             })
             .then(res => {
                 setReviews(res.data);
+                console.log(res.data)
             })
 
     }, [idToken]);

@@ -7,6 +7,7 @@ import {Reviews} from "./page/Reviews";
 import {Login} from "./page/Login";
 import {SignUp} from "./page/SignUp";
 import {ProtectedRoute} from "./component/ProtectedRoute";
+import {Library} from "./page/Library";
 
 function App() {
 
@@ -20,9 +21,10 @@ function App() {
 
                 <Route element={<ProtectedRoute><Layout/></ProtectedRoute>}>
                     <Route path="/home" element={<Home/>}/>
-                    <Route path="/favourites" element={<Favourites/>}/>
+                    <Route path="/library" element={<Library/>}/>
+                    <Route path="/loved" element={<Favourites/>}/>
                     <Route path="/to-read" element={<ToRead/>}/>
-                    <Route path="/book-reviews" element={<Reviews/>}/>
+                    <Route path="/reviews" element={<Reviews/>}/>
                 </Route>
 
             </Routes>

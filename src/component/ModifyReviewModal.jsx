@@ -21,7 +21,8 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
     });
 
     useEffect(() => {
-        if (!isbn13) return;
+        if (!isbn13 ) return;
+        console.log(currentReview);
         axios
             .get(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
                 headers: {
@@ -30,10 +31,9 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
             })
             .then(res => {
                 const data = res.data;
-
                 setCurrentReview(data);
                 setFormData({
-                    plot: data.plot || "",
+                    plot: data.book.plot || "",
                     rate: Number(data.rate) || 0,
                     startDate: data.startDate || "",
                     finishDate: data.finishDate || "",
@@ -87,15 +87,12 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                     }}
                 >
                     <img
-                        src={currentReview.image}
+                        src={currentReview.book?.image || placeholder}
                         alt="Preview"
                         style={{
                             width: "50%",
                             objectFit: "cover",
                             borderRadius: "8px"
-                        }}
-                        onError={(e) => {
-                            e.currentTarget.src = placeholder;
                         }}
                     />
 
@@ -118,15 +115,15 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                     }}
                 >
                     <Typography variant="h5" fontWeight="bold">
-                        {currentReview.isbn13}
+                        {currentReview.book?.isbn13}
                     </Typography>
 
                     <Typography variant="h5" fontWeight="bold">
-                        {currentReview.title}
+                        {currentReview.book?.title}
                     </Typography>
 
                     <Typography variant="6" sx={{mb: 5}}>
-                        {currentReview.author}
+                        {currentReview.book?.author}
                     </Typography>
 
                     <TextField

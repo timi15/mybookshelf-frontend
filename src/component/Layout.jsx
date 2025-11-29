@@ -22,10 +22,11 @@ export const Layout = () => {
     const navigate = useNavigate();
 
     const pages = [
-        {name: 'Home', route: '/home'},
-        {name: 'Favourites', route: '/favourites'},
+        {name: 'Trending', route: '/home'},
+        {name: 'Library', route: '/library'},
+        {name: 'Loved', route: '/loved'},
         {name: 'To Read', route: '/to-read'},
-        {name: 'Reviews', route: '/book-reviews'},
+        {name: 'Reviews', route: '/reviews'},
     ];
 
     const settings = [
