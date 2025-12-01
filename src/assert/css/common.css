@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Playwrite+US+Trad+Guides&display=swap');
+
+
+.MuiButtonBase-root{
+    font-family: "Berkshire Swash", serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    text-transform: lowercase !important;
+    letter-spacing: 2px;
+    font-size: 1.2rem !important;
+    border-radius: 3rem !important;
+}
+
+.MuiTypography-h5{
+    font-family: "Berkshire Swash", serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    text-transform: lowercase !important;
+    font-size: 1.7rem !important;
+    margin: 1rem 0 !important;
+}

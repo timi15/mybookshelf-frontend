@@ -12,21 +12,21 @@ import {
     Typography,
     Menu
 } from "@mui/material";
-import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Outlet, useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/auth/Auth";
 
 export const Layout = () => {
 
-    const {logout} = useContext(AuthContext);
+    const {logout, currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const pages = [
-        {name: 'Home', route: '/home'},
-        {name: 'Favourites', route: '/favourites'},
+        {name: 'Trending', route: '/home'},
+        {name: 'Library', route: '/library'},
+        {name: 'Loved', route: '/loved'},
         {name: 'To Read', route: '/to-read'},
-        {name: 'Reviews', route: '/book-reviews'},
+        {name: 'Reviews', route: '/reviews'},
     ];
 
     const settings = [
@@ -44,14 +44,14 @@ export const Layout = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = (route = false) => {
+    const handleCloseNavMenu = (route) => {
         if (route) {
             navigate(route);
         }
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = (route = false) => {
+    const handleCloseUserMenu = (route) => {
         if (route) {
             navigate(route);
         }
@@ -60,27 +60,9 @@ export const Layout = () => {
 
     return (
         <React.Fragment>
-            <AppBar position="static">
-                <Container maxWidth="xl">
+            <AppBar position="sticky" style={{backgroundColor:' #3a4943'}}>
+                <Container maxWidth="xl" >
                     <Toolbar disableGutters>
-                        <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2,
-                                display: {xs: 'none', md: 'flex'},
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            LOGO
-                        </Typography>
 
                         <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                             <IconButton
@@ -106,7 +88,7 @@ export const Layout = () => {
                                     horizontal: 'left',
                                 }}
                                 open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
+                                onClose={() => setAnchorElUser(null)}
                                 sx={{display: {xs: 'block', md: 'none'}}}
                             >
                                 {pages.map((page, index) => (
@@ -116,31 +98,13 @@ export const Layout = () => {
                                 ))}
                             </Menu>
                         </Box>
-                        <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
-                        <Typography
-                            variant="h5"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2,
-                                display: {xs: 'flex', md: 'none'},
-                                flexGrow: 1,
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            LOGO
-                        </Typography>
-                        <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+
+                        <Box sx={{flexGrow: 1, justifyContent: "center", display: {xs: 'none', md: 'flex'}}}>
                             {pages.map((page, index) => (
                                 <Button
                                     key={index}
                                     onClick={() => handleCloseNavMenu(page.route)}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    sx={{my: 2, color: 'white', display: 'block', marginRight: '3rem'}}
                                 >
                                     {page.name}
                                 </Button>
@@ -148,8 +112,11 @@ export const Layout = () => {
                         </Box>
                         <Box sx={{flexGrow: 0}}>
                             <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar
+                                        alt="User Avatar"
+                                        src={currentUser?.photoURL || "/static/images/avatar/2.jpg"}
+                                    />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -166,7 +133,7 @@ export const Layout = () => {
                                     horizontal: 'right',
                                 }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                                onClose={() => setAnchorElUser(null)}
                             >
                                 {settings.map((setting, index,) => (
                                     <MenuItem key={index} onClick={() => {

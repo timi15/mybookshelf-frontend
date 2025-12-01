@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Modal, TextField, Typography, Snackbar} from '@mui/material';
-import '../assert/password-reset-modal.css';
 import {AuthContext} from "../context/auth/Auth";
+import '../assert/css/password-reset-modal.css';
 
 export const PasswordReset = ({open, handleClose}) => {
 
@@ -91,7 +91,7 @@ export const PasswordReset = ({open, handleClose}) => {
                         fullWidth
                     />
 
-                    <Button size="large" variant="contained" type="submit" fullWidth onClick={handleClick}>
+                    <Button size="large" variant="contained" type="submit" fullWidth onClick={handleClick} style={{backgroundColor:'#3a4943'}}>
                         Email me
                     </Button>
 
