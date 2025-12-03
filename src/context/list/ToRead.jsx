@@ -2,35 +2,35 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../auth/Auth";
 
-export const LovedBooksContext = createContext();
+export const ToReadBooksContext = createContext();
 
-export const Loved = ({children}) => {
+export const ToRead = ({children}) => {
 
     const {idToken} = useContext(AuthContext);
-    const [lovedBooks, setLovedBooks] = useState([]);
+    const [ToReadBooks, setToReadBooks] = useState([]);
 
     useEffect(() => {
         if (!idToken) {
-            setLovedBooks([]);
+            setToReadBooks([]);
             return;
         }
 
-        axios.get(`http://localhost:8080/v1/mybookshelf/loved`, {
+        axios.get(`http://localhost:8080/v1/mybookshelf/to-read`, {
             headers: {
                 "Authorization": `Bearer ${idToken}`,
             }
         })
             .then(res => {
                 const books = res.data.map(item => item.book);
-                setLovedBooks(books);
+                setToReadBooks(books);
                 console.log(books);
             })
     }, [idToken])
 
-    const handleAddLovedBook = async (book) => {
+    const handleAddToReadBook = async (book) => {
         try {
             await axios.post(
-                `http://localhost:8080/v1/mybookshelf/loved/add`,
+                `http://localhost:8080/v1/mybookshelf/to-read/add`,
                 book,
                 {
                     headers: {
@@ -40,7 +40,7 @@ export const Loved = ({children}) => {
                 }
             ).then(res => {
                 console.log(res.data);
-                setLovedBooks(prev => [...prev, res.data.book]);
+                setToReadBooks(prev => [...prev, res.data.book]);
             });
             return true;
 
@@ -49,13 +49,13 @@ export const Loved = ({children}) => {
         }
     };
 
-    const handleRemoveLovedBook = async (isbn13) => {
+    const handleRemoveToReadBook = async (isbn13) => {
 
-        setLovedBooks(lovedBooks.filter((value) => value.isbn13 !== isbn13));
+        setToReadBooks(ToReadBooks.filter((value) => value.isbn13 !== isbn13));
 
         try {
             await axios.delete(
-                `http://localhost:8080/v1/mybookshelf/loved/${isbn13}`,
+                `http://localhost:8080/v1/mybookshelf/to-read/${isbn13}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -72,8 +72,8 @@ export const Loved = ({children}) => {
 
 
     return (
-        <LovedBooksContext.Provider value={{lovedBooks, handleAddLovedBook, handleRemoveLovedBook}}>
+        <ToReadBooksContext.Provider value={{ ToReadBooks, handleAddToReadBook, handleRemoveToReadBook}}>
             {children}
-        </LovedBooksContext.Provider>
+        </ToReadBooksContext.Provider>
     );
 };

@@ -37,7 +37,7 @@ export const Home = () => {
                         containerClass="carousel-container"
                         itemClass="carousel-item">
                         {books.map((book) => (
-                            <BookCard key={book.isbn13} book={book} list={false} />
+                            <BookCard key={book.isbn13} book={book} list={false} list_name="none" />
                         ))}
                     </Carousel>
                 </div>

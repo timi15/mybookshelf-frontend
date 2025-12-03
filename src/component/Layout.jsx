@@ -24,7 +24,7 @@ export const Layout = () => {
     const pages = [
         {name: 'Trending', route: '/home'},
         {name: 'Library', route: '/library'},
-        {name: 'Loved', route: '/list'},
+        {name: 'Loved', route: '/loved'},
         {name: 'To Read', route: '/to-read'},
         {name: 'Reviews', route: '/reviews'},
     ];

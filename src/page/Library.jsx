@@ -10,7 +10,7 @@ export const Library = () => {
     return (
         <div className="book-grid">
             {books?.map((book) => (
-                <BookCard key={book.isbn13} book={book} list={false} />
+                <BookCard key={book.isbn13} book={book} list_name="none" />
             ))}
         </div>
     )

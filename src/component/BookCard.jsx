@@ -12,10 +12,12 @@ import ClearIcon from '@mui/icons-material/Clear';
 import {ReviewModal} from "./ReviewModal";
 import {LovedBooksContext} from "../context/list/Loved";
 import {BookContext} from "../context/book/Books";
+import {ToReadBooksContext} from "../context/list/ToRead";
 
-export const BookCard = ({book, list}) => {
+export const BookCard = ({book, list_name}) => {
 
     const {handleAddLovedBook, handleRemoveLovedBook} = useContext(LovedBooksContext);
+    const {handleAddToReadBook, handleRemoveToReadBook} = useContext(ToReadBooksContext);
     const {handleAddBook} = useContext(BookContext);
 
     const [hover, setHover] = useState(false);
@@ -77,7 +79,7 @@ export const BookCard = ({book, list}) => {
                 >
 
                     {
-                        !list ? (
+                        list_name === "none" ? (
                             <>
                                 <IconButton size="large" sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}
                                             onClick={() => {
@@ -88,21 +90,38 @@ export const BookCard = ({book, list}) => {
                                 </IconButton>
 
                                 <IconButton size="large"
-                                            sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}>
+                                            sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}
+                                            onClick={() => {
+                                                handleAddBook(book);
+                                                handleAddToReadBook(book)
+                                            }}>
                                     <AddIcon/>
                                 </IconButton>
                             </>
                         ) : (
-                            <>
-                                <IconButton size="large"
-                                            sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}
-                                            onClick={() => {
-                                                handleRemoveLovedBook(book.isbn13)
-                                            }}
-                                >
-                                    <ClearIcon/>
-                                </IconButton>
-                            </>
+                            list_name === "loved" ? (
+                                <>
+                                    <IconButton size="large"
+                                                sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}
+                                                onClick={() => {
+                                                    handleRemoveLovedBook(book.isbn13)
+                                                }}
+                                    >
+                                        <ClearIcon/>
+                                    </IconButton>
+                                </>
+                            ) : (
+                                <>
+                                    <IconButton size="large"
+                                                sx={{color: "white", backgroundColor: "rgba(255,255,255,0.1)"}}
+                                                onClick={() => {
+                                                    handleRemoveToReadBook(book.isbn13)
+                                                }}
+                                    >
+                                        <ClearIcon/>
+                                    </IconButton>
+                                </>
+                            )
                         )
                     }
 
