@@ -5,6 +5,7 @@ import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
 import placeholder from "../assert/img/placeholder.jpg"
 import {DateRangeFields} from "./DateRangeFields";
+import Chip from "@mui/material/Chip";
 
 export const ModifyReviewModal = ({isbn13, open, close}) => {
 
@@ -17,11 +18,12 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
         rate: 0,
         startDate: "",
         finishDate: "",
+        genres:[],
         reflection: "",
     });
 
     useEffect(() => {
-        if (!isbn13 ) return;
+        if (!isbn13) return;
         console.log(currentReview);
         axios
             .get(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
@@ -37,6 +39,7 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                     rate: Number(data.rate) || 0,
                     startDate: data.startDate || "",
                     finishDate: data.finishDate || "",
+                    genres: data.genres || [],
                     reflection: data.reflection || "",
                 });
             });
@@ -141,6 +144,14 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                             setFormData({...formData, [target.name]: target.value})
                         }
                     />
+
+                    <Box sx={{mb: 4, textAlign:"center"}}>
+                        {
+                           formData.genres?.map((genre) => (
+                                <Chip sx={{marginLeft:"2rem"}} label={genre}/>
+                            ))
+                        }
+                    </Box>
 
                     <DateRangeFields formData={formData} setFormData={setFormData}/>
 

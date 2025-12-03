@@ -1,11 +1,23 @@
 import React, {useContext, useState} from 'react'
-import {Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Rating, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    IconButton,
+    Rating,
+    Stack,
+    Typography
+} from "@mui/material";
 import {ReviewContext} from "../context/review/Review";
 import {ReviewModal} from "../component/ReviewModal";
 import {ModifyReviewModal} from "../component/ModifyReviewModal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import "../assert/css/common.css"
+import Chip from "@mui/material/Chip";
 
 export const Reviews = () => {
 
@@ -97,7 +109,7 @@ export const Reviews = () => {
                                 />
                             </Box>
 
-                            <CardContent sx={{textAlign: 'center', flexGrow: 1}}>
+                            <CardContent sx={{textAlign: 'center', flexGrow: 1, width: "100%"}}>
                                 <Typography variant="h5" fontWeight="bold">
                                     {review.book.title}
                                 </Typography>
@@ -109,6 +121,14 @@ export const Reviews = () => {
                                 <Typography variant="body2" sx={{color: 'text.secondary', mb: 3}}>
                                     {review.book.plot}
                                 </Typography>
+
+                                <Box sx={{mb: 2}}>
+                                    {
+                                        review?.genres?.map((genre) => (
+                                            <Chip sx={{marginLeft:"5px"}} label={genre}/>
+                                        ))
+                                    }
+                                </Box>
 
                                 <Rating name="read-only" value={review.rate} sx={{mb: 3}} readOnly/>
 

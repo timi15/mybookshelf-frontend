@@ -9,6 +9,7 @@ import {BookContext} from "../context/book/Books";
 import "../assert/css/modal.css"
 import "../assert/css/common.css"
 import placeholder from "../assert/img/placeholder.jpg"
+import {GenreSelect} from "./GenreSelect";
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
@@ -20,27 +21,27 @@ export const ReviewModal = ({book = {}, open, close}) => {
 
     const [formData, setFormData] = useState({})
     const [rate, setRate] = React.useState(5);
+    const [genres, setGenres] = useState([]);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const submit = {
-            isbn13: book.isbn13  || formData.isbn13,
+            isbn13: book.isbn13 || formData.isbn13,
             book: {
-                isbn13: book.isbn13  || formData.isbn13,
-                title: book.title  || formData.title,
+                isbn13: book.isbn13 || formData.isbn13,
+                title: book.title || formData.title,
                 author: book.author || formData.author,
                 image: book.image || formData.image,
                 plot: book.plot || formData.plot
             },
+            genres: genres,
             rate: rate,
             startDate: formData.startDate,
             finishDate: formData.finishDate,
             reflection: formData.reflection
         };
-
-        console.log(submit)
 
         axios
             .post('http://localhost:8080/v1/mybookshelf/book-review/save', submit, {
@@ -55,8 +56,9 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     handleAddBook(res.data.book);
                     close();
                     navigate("/reviews")
-
                 }
+                setFormData({});
+                setGenres([]);
             })
     };
 
@@ -64,7 +66,11 @@ export const ReviewModal = ({book = {}, open, close}) => {
     return (
         <Modal
             open={open}
-            onClose={close}
+            onClose={() => {
+                close();
+                setFormData({});
+                setGenres([]);
+            }}
         >
             <Box
                 className="modal-style"
@@ -88,7 +94,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        justifyContent:"center",
+                        justifyContent: "center",
                         order: -1,
                         "@media (min-width:1000px)": {
                             width: "40%",
@@ -116,6 +122,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         style={{margin: "2rem"}}
                         onChange={(event, newValue) => setRate(newValue)}
                     />
+
                 </Box>
 
                 <Box
@@ -218,6 +225,8 @@ export const ReviewModal = ({book = {}, open, close}) => {
                             setFormData({...formData, [target.name]: target.value})
                         }
                     />
+
+                    <GenreSelect value={genres} onChange={setGenres}/>
 
                     <DateRangeFields formData={formData} setFormData={setFormData}/>
 
