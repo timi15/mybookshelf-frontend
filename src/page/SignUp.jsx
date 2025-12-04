@@ -6,15 +6,17 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {auth} from "../firebaseConfig"
+import {auth} from "../config/firebaseConfig"
 import {AuthContext} from "../context/auth/Auth";
 import {PasswordField} from "../component/PasswordField";
 import GoogleIcon from '@mui/icons-material/Google';
 import '../assert/css/auth.css'
+import {IssueAlertContext} from "../context/IssueAlert";
 
 export const SignUp = () => {
 
     const {signUpWithEmail, signInWithGoogle} = useContext(AuthContext);
+    const {showAlert} = useContext(IssueAlertContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -30,16 +32,19 @@ export const SignUp = () => {
             setFormData({name: '', email: '', password: ''});
             navigate("/sign-in");
         } catch (error) {
-            console.error("Sign up error:", error.code, error.message);
+            showAlert(error.message.split(":")[1], 'error');
         }
     };
 
     const handleSubmitGoogle = async () => {
         try {
             await signInWithGoogle();
-            if (auth.currentUser) navigate("/home");
+            if (auth.currentUser) {
+                showAlert('Login successfully', 'success');
+                navigate("/home");
+            }
         } catch (error) {
-            console.error("Google sign up error:", error);
+            showAlert(error.message, 'error');
         }
     }
 

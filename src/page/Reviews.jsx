@@ -8,7 +8,6 @@ import {
     CardMedia,
     IconButton,
     Rating,
-    Stack,
     Typography
 } from "@mui/material";
 import {ReviewContext} from "../context/review/Review";

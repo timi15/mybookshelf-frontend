@@ -1,12 +1,16 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 import axios from "axios";
 import {AuthContext} from "../auth/Auth";
+import {BASE_URL} from "../../config/api";
+import {IssueAlertContext} from "../IssueAlert";
 
 export const ReviewContext = createContext();
 
 export const Review = ({children}) => {
 
     const {idToken} = useContext(AuthContext);
+    const {showAlert} = useContext(IssueAlertContext);
+
 
     const [reviews, setReviews] = useState([]);
 
@@ -17,7 +21,7 @@ export const Review = ({children}) => {
         }
 
         axios
-            .get('http://localhost:8080/v1/mybookshelf/book-review/all', {
+            .get(`${BASE_URL}/v1/mybookshelf/book-review/all`, {
                 headers: {
                     Authorization: `Bearer ${idToken}`
                 }
@@ -40,18 +44,21 @@ export const Review = ({children}) => {
 
         try {
             await axios.put(
-                `http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`,
+                `${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`,
                 review,
                 {
                     headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${idToken}`
+                        "Authorization": `Bearer ${idToken}`,
+                        "Content-Type": "application/json"
                     }
                 }
             );
+
+            showAlert('Review updated successfully.', 'success');
             return true;
 
         } catch (err) {
+            showAlert('Review updated failed.', 'error');
             return false;
         }
     };
@@ -61,16 +68,17 @@ export const Review = ({children}) => {
         setReviews(prev => prev.filter((value) => value.isbn13 !== isbn13));
         try {
             await axios
-                .delete(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
+                .delete(`${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`, {
                     headers: {
                         "Authorization": `Bearer ${idToken}`
                     }
                 });
 
+            showAlert('Review removed successfully.', 'success');
             return true;
 
         } catch (err) {
-            console.log(err);
+            showAlert('Review removed failed.', 'error');
             return false;
         }
     };

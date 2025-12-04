@@ -7,15 +7,17 @@ import {
 } from "@mui/material";
 import Link from '@mui/material/Link';
 import {AuthContext} from "../context/auth/Auth";
-import {auth} from "../firebaseConfig";
+import {auth} from "../config/firebaseConfig";
 import {PasswordReset} from "../component/PasswordReset";
 import {PasswordField} from "../component/PasswordField";
 import GoogleIcon from "@mui/icons-material/Google";
 import '../assert/css/auth.css'
+import {IssueAlertContext} from "../context/IssueAlert";
 
 export const Login = () => {
 
     const {signInWithEmail, signInWithGoogle} = useContext(AuthContext);
+    const {showAlert} = useContext(IssueAlertContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -33,18 +35,23 @@ export const Login = () => {
         try {
             const userCredential = await signInWithEmail(formData.email, formData.password);
             setFormData({email: '', password: ''});
+            showAlert('Login successfully', 'success');
             navigate("/home");
+
         } catch (error) {
-            console.error("Sign up error:", error.code, error.message);
+            showAlert(error.message, 'error');
         }
     }
 
     const handleSubmitGoogle = async () => {
         try {
             await signInWithGoogle();
-            if (auth.currentUser) navigate("/home");
+            if (auth.currentUser) {
+                showAlert('Login successfully', 'success');
+                navigate("/home");
+            }
         } catch (error) {
-            console.error("Google sign up error:", error);
+            showAlert(error.message, 'error');
         }
     }
 

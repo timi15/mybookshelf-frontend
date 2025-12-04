@@ -1,12 +1,16 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../auth/Auth";
+import {BASE_URL} from "../../config/api";
+import {IssueAlertContext} from "../IssueAlert";
 
 export const LovedBooksContext = createContext();
 
 export const Loved = ({children}) => {
 
     const {idToken} = useContext(AuthContext);
+    const {showAlert} = useContext(IssueAlertContext);
+
     const [lovedBooks, setLovedBooks] = useState([]);
 
     useEffect(() => {
@@ -15,7 +19,7 @@ export const Loved = ({children}) => {
             return;
         }
 
-        axios.get(`http://localhost:8080/v1/mybookshelf/loved`, {
+        axios.get(`${BASE_URL}/v1/mybookshelf/loved`, {
             headers: {
                 "Authorization": `Bearer ${idToken}`,
             }
@@ -28,26 +32,31 @@ export const Loved = ({children}) => {
     }, [idToken])
 
     const handleAddLovedBook = async (book) => {
-        try {
-            await axios.post(
-                `http://localhost:8080/v1/mybookshelf/loved/add`,
-                book,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${idToken}`
+            try {
+                await axios.post(
+                    `${BASE_URL}/v1/mybookshelf/loved/add`,
+                    book,
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${idToken}`,
+                            "Content-Type": "application/json"
+                        }
                     }
-                }
-            ).then(res => {
-                console.log(res.data);
-                setLovedBooks(prev => [...prev, res.data.book]);
-            });
-            return true;
+                ).then(res => {
+                    showAlert("Book added successfully!", 'success');
+                    setLovedBooks(prev => [...prev, res.data.book]);
+                });
+                return true;
 
-        } catch (err) {
-            return false;
+            } catch (err) {
+                if (err.response?.status === 409) {
+                    showAlert(err.response.data.message, "error");
+                }
+
+                return false;
+            }
         }
-    };
+    ;
 
     const handleRemoveLovedBook = async (isbn13) => {
 
@@ -55,17 +64,18 @@ export const Loved = ({children}) => {
 
         try {
             await axios.delete(
-                `http://localhost:8080/v1/mybookshelf/loved/${isbn13}`,
+                `${BASE_URL}/v1/mybookshelf/loved/${isbn13}`,
                 {
                     headers: {
-                        "Content-Type": "application/json",
                         "Authorization": `Bearer ${idToken}`
                     }
                 }
             )
+            showAlert("Book removed successfully!", 'success');
             return true;
 
         } catch (err) {
+            showAlert('Book removed failed.', 'error');
             return false;
         }
     };

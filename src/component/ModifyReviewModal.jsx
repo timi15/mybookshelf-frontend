@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
+import {Box, Button, Modal, Rating, TextField, Typography, Chip } from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
-import placeholder from "../assert/img/placeholder.jpg"
+import {BASE_URL} from "../config/api";
 import {DateRangeFields} from "./DateRangeFields";
-import Chip from "@mui/material/Chip";
+import placeholder from "../assert/img/placeholder.jpg"
 
 export const ModifyReviewModal = ({isbn13, open, close}) => {
 
@@ -26,7 +26,7 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
         if (!isbn13) return;
         console.log(currentReview);
         axios
-            .get(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
+            .get(`${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`, {
                 headers: {
                     "Authorization": `Bearer ${idToken}`
                 }

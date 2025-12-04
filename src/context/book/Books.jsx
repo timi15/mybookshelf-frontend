@@ -2,6 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import {AuthContext} from "../auth/Auth";
+import {BASE_URL} from "../../config/api";
 
 export const BookContext = createContext();
 
@@ -33,7 +34,7 @@ export const Books = ({children}) => {
     });
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/v1/mybookshelf/book/all`, {
+        axios.get(`${BASE_URL}/v1/mybookshelf/book/all`, {
             headers: {
                 "Authorization": `Bearer ${idToken}`,
             }

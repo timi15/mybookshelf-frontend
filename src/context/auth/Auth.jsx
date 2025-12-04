@@ -7,7 +7,7 @@ import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail
 } from "firebase/auth";
-import {auth} from '../../firebaseConfig'
+import {auth} from '../../config/firebaseConfig'
 
 export const AuthContext = createContext();
 

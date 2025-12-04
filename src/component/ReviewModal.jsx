@@ -4,12 +4,14 @@ import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
-import {DateRangeFields} from "./DateRangeFields";
 import {BookContext} from "../context/book/Books";
+import {DateRangeFields} from "./DateRangeFields";
+import {GenreSelect} from "./GenreSelect";
+import {BASE_URL} from "../config/api";
+import placeholder from "../assert/img/placeholder.jpg"
 import "../assert/css/modal.css"
 import "../assert/css/common.css"
-import placeholder from "../assert/img/placeholder.jpg"
-import {GenreSelect} from "./GenreSelect";
+import {IssueAlertContext} from "../context/IssueAlert";
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
@@ -18,6 +20,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
     const {idToken} = useContext(AuthContext);
     const {handleAddReview} = useContext(ReviewContext);
     const {handleAddBook} = useContext(BookContext);
+    const {showAlert} = useContext(IssueAlertContext);
 
     const [formData, setFormData] = useState({})
     const [rate, setRate] = React.useState(5);
@@ -44,10 +47,10 @@ export const ReviewModal = ({book = {}, open, close}) => {
         };
 
         axios
-            .post('http://localhost:8080/v1/mybookshelf/book-review/save', submit, {
+            .post(`${BASE_URL}/v1/mybookshelf/book-review/save`, submit, {
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${idToken}`
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-Type": "application/json"
                 }
             })
             .then(res => {
@@ -55,10 +58,18 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     handleAddReview(res.data);
                     handleAddBook(res.data.book);
                     close();
-                    navigate("/reviews")
+                    navigate("/reviews");
+                    showAlert('Review added successfully.', 'success');
                 }
                 setFormData({});
                 setGenres([]);
+            })
+            .catch((err) => {
+                if (err.response?.status === 409) {
+                    const errors = err.response.data.errors;
+                    const firstError = Object.values(errors)[0][0];
+                    showAlert(firstError, "error");
+                }
             })
     };
 
