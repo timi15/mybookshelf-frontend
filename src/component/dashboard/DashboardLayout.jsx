@@ -1,5 +1,6 @@
 import React from 'react';
 import {Box, Paper} from "@mui/material";
+import "../../assert/css/dashboard.css"
 
 export const DashboardLayout = ({
                                     readBookNumber,
@@ -23,61 +24,66 @@ export const DashboardLayout = ({
             }}
         >
 
+            <Paper sx={{p: 2, textAlign: "center", backgroundColor: "#f1ecdb", borderRadius: 6}}>
+                <h3>Number of books read</h3>
+                <p style={{fontSize: "2.5rem"}}>{readBookNumber}</p>
+            </Paper>
 
-                <Paper sx={{p: 2, textAlign: "center", backgroundColor:"#f1ecdb"}}>
-                    <h3>Total books</h3>
-                    <p style={{fontSize: "2.5rem"}}>{readBookNumber}</p>
-                </Paper>
+            <Paper sx={{p: 2, textAlign: "center", backgroundColor: "#f1ecdb", borderRadius: 6}}>
+                <h3>Number of favorite books</h3>
+                <p style={{fontSize: "2.5rem"}}>{lovedBookNumber}</p>
+            </Paper>
 
-                <Paper sx={{p: 2, textAlign: "center", backgroundColor:"#f1ecdb"}}>
-                    <h3>Loved books</h3>
-                    <p style={{fontSize: "2.5rem"}}>{lovedBookNumber}</p>
-                </Paper>
-
-                <Paper sx={{
-                    p: 2,
-                    gridColumn: "span 2",
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: 4,
-                    justifyContent: "center",
-                    backgroundColor:"#f1ecdb"
-                }}>
-                    {top3GenresTable}
-                </Paper>
-
+            <Paper sx={{
+                p: 2,
+                gridColumn: "span 2",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                backgroundColor: "#f1ecdb",
+                borderRadius: 6
+            }}>
+                <h3>TOP 3 genre</h3>
+                {top3GenresTable}
+            </Paper>
 
             <Paper sx={{
                 p: 2,
                 gridColumn: {xs: "1 / -1", md: "1 / span 3"},
-                backgroundColor:"#f1ecdb"
+                backgroundColor: "#f1ecdb",
+                borderRadius: 6,
             }}>
+                <h3>TOP 5 Book</h3>
                 {topBooks}
             </Paper>
 
             <Paper sx={{
                 p: 2,
                 gridColumn: {xs: "1 / -1", md: "span 1"},
-                backgroundColor:"#f1ecdb"
+                backgroundColor: "#f1ecdb",
+                borderRadius: 6
             }}>
+                <h3>Last Read Book</h3>
                 {lastReadBook}
             </Paper>
-
 
             <Paper sx={{
                 gridColumn: {xs: "1 / -1", md: "1 / span 3"},
                 p: 2,
-                backgroundColor:"#f1ecdb"
+                backgroundColor: "#f1ecdb",
+                borderRadius: 6
             }}>
+                <h3>Annual reading statistics</h3>
                 {readingChart}
             </Paper>
-
 
             <Paper sx={{
                 p: 2,
                 gridColumn: {xs: "1 / -1", md: "span 1"},
-                backgroundColor:"#f1ecdb"
+                backgroundColor: "#f1ecdb",
+                borderRadius: 6
             }}>
+                <h3>Genre statistics</h3>
                 {genreDonut}
             </Paper>
 

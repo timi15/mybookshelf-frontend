@@ -4,6 +4,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export const PasswordField = ({name, label, value, onChange, required}) => {
+
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -17,8 +18,8 @@ export const PasswordField = ({name, label, value, onChange, required}) => {
     };
 
     return (
-        <FormControl variant="outlined" required={required}>
-            <InputLabel size="small" htmlFor={name}>Password</InputLabel>
+        <FormControl variant="outlined" required={required} fullWidth>
+            <InputLabel size="small" htmlFor={name}>{label}</InputLabel>
             <OutlinedInput
                 id={name}
                 name={name}

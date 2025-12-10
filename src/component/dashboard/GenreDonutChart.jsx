@@ -1,5 +1,6 @@
 import React from 'react'
 import {PieChart} from '@mui/x-charts/PieChart';
+import {Box, Skeleton} from "@mui/material";
 
 export const GENRE_COLORS = {
     'Fantasy': '#7B68EE',
@@ -28,13 +29,17 @@ export const GenreDonutChart = ({dashboard}) => {
     const genreStat = dashboard?.genreStat ?? {};
 
     if (!Object.keys(genreStat).length) {
-        return <p>No genre data available</p>;
+        return (
+            <Box sx={{ flexGrow: 1, display:"flex", justifyContent:"center", alignItems:"center", mt:7, mb:4 }}>
+                <Skeleton variant="circular" width={180} height={180}/>
+            </Box>
+        );
     }
 
     const data = Object.entries(genreStat).map(([label, value]) => ({
         label,
         value,
-        color: GENRE_COLORS[label] || '#888888', // fallback, ha új genre lesz
+        color: GENRE_COLORS[label],
     }));
 
     const settings = {
@@ -45,21 +50,16 @@ export const GenreDonutChart = ({dashboard}) => {
     };
 
     return (
-        <>
-
-            <h3>Genre stat</h3>
-
-            <PieChart
-                series={[
-                    {
-                        innerRadius: 60,
-                        outerRadius: 110,
-                        data: data,
-                        arcLabel: (item) => item.value,
-                    },
-                ]}
-                {...settings}
-            />
-        </>
+        <PieChart
+            series={[
+                {
+                    innerRadius: 60,
+                    outerRadius: 110,
+                    data: data,
+                    arcLabel: (item) => item.value,
+                },
+            ]}
+            {...settings}
+        />
     )
 }

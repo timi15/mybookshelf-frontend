@@ -3,12 +3,12 @@ import {Box, Skeleton} from "@mui/material";
 
 export const TopBooks = ({dashboard}) => {
 
-    const topBooks = dashboard?.top5BookImage ?? {};
+    const topBooks = dashboard?.top5BookImage ?? [];
 
 
     if (!topBooks || topBooks.length === 0) {
         return (
-            <Box sx={{display: "flex", gap: 2}}>
+            <Box sx={{display: "flex", gap: 2, justifyContent: "center", }}>
                 {[...Array(5)].map((_, i) => (
                     <Skeleton
                         key={i}
@@ -22,9 +22,6 @@ export const TopBooks = ({dashboard}) => {
     }
 
     return (
-        <>
-            <h3>Top 5 Books</h3>
-
             <div style={{
                 display: "flex",
                 gap: 12,
@@ -45,6 +42,5 @@ export const TopBooks = ({dashboard}) => {
                     ))}
                 </Box>
             </div>
-        </>
     )
 }

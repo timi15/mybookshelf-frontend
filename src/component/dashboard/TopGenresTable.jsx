@@ -4,9 +4,8 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, {tableCellClasses} from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {Box, Skeleton} from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,16 +37,17 @@ export const TopGenresTable = ({dashboard}) => {
         genre,
     }));
 
-    return (
-        <TableContainer component={Paper} elevation={3} sx={{ width: '30rem'}}>
-            <Table sx={{minWidth: 200}} aria-label="top genres table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Rank</StyledTableCell>
-                        <StyledTableCell>Genre</StyledTableCell>
-                    </TableRow>
-                </TableHead>
+    if (!top3Genres || top3Genres.length === 0) {
+        return (
+            <Box sx={{display: "flex", gap: 2, justifyContent: "center", }}>
+                <Skeleton variant="rectangular" width="100%" height={130}/>
+            </Box>
+        );
+    }
 
+    return (
+        <TableContainer  elevation={3} sx={{ width: "85%", marginLeft:"auto", marginRight:"auto" }}>
+            <Table aria-label="top genres table">
                 <TableBody>
                     {rows.map((row) => (
                         <StyledTableRow key={row.rank}>

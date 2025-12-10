@@ -16,29 +16,39 @@ export const ReadingStatsChart = ({dashboard}) => {
 
     return (
         <BarChart
-            sx={{width: '80%', marginLeft: 'auto', marginRight: 'auto'}}
+            sx={{
+                width: '80%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                '& .MuiBarLabel-root': {
+                    fill: 'white'
+                }
+            }}
             dataset={monthlyDataset}
             xAxis={[
                 {
                     scaleType: 'band',
                     dataKey: 'month',
-                    valueFormatter: (month) => month.slice(0, 3),
+                    valueFormatter: (month) => month.slice(0, 3).toLowerCase(),
                     height: 40,
 
                 },
             ]}
             series={[
                 {
+                    color: '#3a4943',
                     dataKey: 'value',
-                    label: 'Books read',
-                    valueFormatter: (v) => `${v} book(s)`,
+                    barLabel: (item) => item.value > 0 ? `${item.value}` : ''
                 },
             ]}
+            slots={{
+                tooltip: () => null
+            }}
             height={300}
             grid={{horizontal: true}}
             yAxis={[
                 {
-                    label: 'Books read',
+                    label: 'Number of books read',
                     width: 60,
                     tickInterval: 1
                 }

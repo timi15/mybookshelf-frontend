@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {AuthContext} from "../../context/auth/Auth";
+import {AuthContext} from "../context/auth/Auth";
 import axios from "axios";
-import {BASE_URL} from "../../config/api";
-import {ReadingStatsChart} from "./ReadingStatsChart";
-import {GenreDonutChart} from "./GenreDonutChart";
-import {TopGenresTable} from "./TopGenresTable";
-import {DashboardLayout} from "./DashboardLayout";
-import {TopBooks} from "./TopBooks";
+import {BASE_URL} from "../config/api";
+import {ReadingStatsChart} from "../component/dashboard/ReadingStatsChart";
+import {GenreDonutChart} from "../component/dashboard/GenreDonutChart";
+import {TopGenresTable} from "../component/dashboard/TopGenresTable";
+import {DashboardLayout} from "../component/dashboard/DashboardLayout";
+import {TopBooks} from "../component/dashboard/TopBooks";
 import {Skeleton} from "@mui/material";
-import {LastReadBookCard} from "./LastReadBookCard";
+import {LastReadBookCard} from "../component/dashboard/LastReadBookCard";
 
 export const Dashboard = () => {
 
@@ -46,7 +46,7 @@ export const Dashboard = () => {
     const realContent = {
         readBookNumber: dashboard?.totalBooks ?? 0,
         lovedBookNumber: dashboard?.totalLovedBooks ?? 0,
-        lastReadBook: <LastReadBookCard image={dashboard?.lastReadBookImage ?? ''}/>,
+        lastReadBook: <LastReadBookCard image={dashboard?.lastReadBookImage ?? null}/>,
         topBooks: <TopBooks dashboard={dashboard}/>,
         readingChart: <ReadingStatsChart dashboard={dashboard}/>,
         genreDonut: <GenreDonutChart dashboard={dashboard}/>,
