@@ -30,8 +30,8 @@ export const Layout = () => {
     ];
 
     const settings = [
-        {name: 'Profile', route: '/profile'},
-        {name: 'Overview', route: '/overview'},
+        {name: 'Profile settings', route: '/profile'},
+        {name: 'Dashboard', route: '/dashboard'},
         {name: 'Logout', route: '/logout'},
     ];
 

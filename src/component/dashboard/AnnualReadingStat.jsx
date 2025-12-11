@@ -6,9 +6,9 @@ const MONTHS = [
     'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
 ];
 
-export const ReadingStatsChart = ({dashboard}) => {
+export const AnnualReadingStat = ({dashboard}) => {
 
-    const monthlyStat = dashboard?.monthlyStat ?? {};
+    const monthlyStat = dashboard?.monthlyReadingStats ?? {};
     const monthlyDataset = MONTHS.map((month) => ({
         month,
         value: monthlyStat[month] ?? 0,

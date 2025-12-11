@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Skeleton} from "@mui/material";
 
-export const LastReadBookCard = ({image}) => {
+export const LastReadBook = ({image}) => {
 
     if (image === null){
         return (
@@ -17,7 +17,7 @@ export const LastReadBookCard = ({image}) => {
                 src={image}
                 alt="Last read"
                 style={{
-                    width: 145,
+                    width: 170,
                     objectFit: "cover",
                     borderRadius: 6
                 }}

@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
     },
 }));
 
-export const TopGenresTable = ({dashboard}) => {
+export const Top3GenreTable = ({dashboard}) => {
 
     const top3Genres = dashboard?.top3Genres ?? [];
 

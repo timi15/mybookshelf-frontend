@@ -1,9 +1,9 @@
 import React from 'react'
 import {Box, Skeleton} from "@mui/material";
 
-export const TopBooks = ({dashboard}) => {
+export const Top5Book = ({dashboard}) => {
 
-    const topBooks = dashboard?.top5BookImage ?? [];
+    const topBooks = dashboard?.top5BookCoverUrls ?? [];
 
 
     if (!topBooks || topBooks.length === 0) {
@@ -34,7 +34,7 @@ export const TopBooks = ({dashboard}) => {
                             src={src}
                             alt={i}
                             style={{
-                                width: "15%",
+                                width: "13%",
                                 objectFit: "cover",
                                 borderRadius: 8
                             }}

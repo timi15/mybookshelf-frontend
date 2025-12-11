@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from 'react'
 import {AuthContext} from "../context/auth/Auth";
 import axios from "axios";
 import {BASE_URL} from "../config/api";
-import {ReadingStatsChart} from "../component/dashboard/ReadingStatsChart";
-import {GenreDonutChart} from "../component/dashboard/GenreDonutChart";
-import {TopGenresTable} from "../component/dashboard/TopGenresTable";
+import {AnnualReadingStat} from "../component/dashboard/AnnualReadingStat";
+import {GenreStat} from "../component/dashboard/GenreStat";
+import {Top3GenreTable} from "../component/dashboard/Top3GenreTable";
 import {DashboardLayout} from "../component/dashboard/DashboardLayout";
-import {TopBooks} from "../component/dashboard/TopBooks";
+import {Top5Book} from "../component/dashboard/Top5Book";
 import {Skeleton} from "@mui/material";
-import {LastReadBookCard} from "../component/dashboard/LastReadBookCard";
+import {LastReadBook} from "../component/dashboard/LastReadBook";
 
 export const Dashboard = () => {
 
@@ -44,13 +44,13 @@ export const Dashboard = () => {
     };
 
     const realContent = {
-        readBookNumber: dashboard?.totalBooks ?? 0,
-        lovedBookNumber: dashboard?.totalLovedBooks ?? 0,
-        lastReadBook: <LastReadBookCard image={dashboard?.lastReadBookImage ?? null}/>,
-        topBooks: <TopBooks dashboard={dashboard}/>,
-        readingChart: <ReadingStatsChart dashboard={dashboard}/>,
-        genreDonut: <GenreDonutChart dashboard={dashboard}/>,
-        top3GenresTable: <TopGenresTable dashboard={dashboard}/>
+        readBookNumber: dashboard?.numberOfReadBooks ?? 0,
+        lovedBookNumber: dashboard?.numberOfFavouriteBooks ?? 0,
+        lastReadBook: <LastReadBook image={dashboard?.lastReadBookCoverUrl ?? null}/>,
+        topBooks: <Top5Book dashboard={dashboard}/>,
+        readingChart: <AnnualReadingStat dashboard={dashboard}/>,
+        genreDonut: <GenreStat dashboard={dashboard}/>,
+        top3GenresTable: <Top3GenreTable dashboard={dashboard}/>
     };
 
     return (

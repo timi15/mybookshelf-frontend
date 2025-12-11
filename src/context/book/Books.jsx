@@ -25,7 +25,7 @@ export const Books = ({children}) => {
                 books: list.books.map((b) => ({
                     isbn13: b.primary_isbn13,
                     title: b.title,
-                    image: b.book_image,
+                    coverUrl: b.book_image,
                     author: b.author,
                     plot: b.description,
                 })),

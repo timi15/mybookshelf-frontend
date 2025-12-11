@@ -24,9 +24,9 @@ export const GENRE_COLORS = {
     'Memoir': '#D2691E',
 };
 
-export const GenreDonutChart = ({dashboard}) => {
+export const GenreStat = ({dashboard}) => {
 
-    const genreStat = dashboard?.genreStat ?? {};
+    const genreStat = dashboard?.genreStats ?? {};
 
     if (!Object.keys(genreStat).length) {
         return (
