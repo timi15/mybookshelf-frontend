@@ -83,6 +83,7 @@ export const Login = () => {
                 <PasswordField
                     name="password"
                     label="Password"
+                    required={true}
                     value={formData.password}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
@@ -125,7 +126,7 @@ export const Login = () => {
                     onClick={handleSubmitGoogle}
                     style={{backgroundColor: "#3a4943"}}
                 >
-                    <GoogleIcon className="google-icon" fontSize="medium"/> Login with Google
+                    <GoogleIcon className="google-icon" fontSize="medium"/> continue with Google
                 </Button>
 
             </Box>

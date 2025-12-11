@@ -48,6 +48,7 @@ export const Reviews = () => {
             </div>
             <div className="container" style={{
                 marginTop: "3rem",
+                marginBottom: "3rem",
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "2rem",
@@ -97,7 +98,7 @@ export const Reviews = () => {
                             >
                                 <CardMedia
                                     component="img"
-                                    image={review.book.image}
+                                    image={review.book.coverUrl}
                                     alt={review.book.title}
                                     sx={{
                                         height: 250,
@@ -155,10 +156,11 @@ export const Reviews = () => {
                                         }}
                                         sx={{
                                             width: '100%',
-                                            backgroundColor: "#e3f2fd",
+                                            backgroundColor: "#3a4943",
+                                            color:"white",
                                             borderRadius: "12px",
                                             padding: "10px",
-                                            "&:hover": {backgroundColor: "#bbdefb"}
+                                            "&:hover": {backgroundColor: "rgba(108,131,125,0.65)"}
                                         }}
                                     >
                                         <EditIcon/>
@@ -171,10 +173,11 @@ export const Reviews = () => {
                                         onClick={() => handleRemoveReview(review.isbn13)}
                                         sx={{
                                             width: '100%',
-                                            backgroundColor: "#ffebee",
+                                            backgroundColor: "#3a4943",
+                                            color:"white",
                                             borderRadius: "12px",
                                             padding: "10px",
-                                            "&:hover": {backgroundColor: "#ffcdd2"}
+                                            "&:hover": {backgroundColor: "rgba(108,131,125,0.65)"}
                                         }}
                                     >
                                         <DeleteIcon/>

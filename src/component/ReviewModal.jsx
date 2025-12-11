@@ -36,7 +36,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                 isbn13: book.isbn13 || formData.isbn13,
                 title: book.title || formData.title,
                 author: book.author || formData.author,
-                image: book.image || formData.image,
+                coverUrl: book.coverUrl || formData.coverUrl,
                 plot: book.plot || formData.plot
             },
             genres: genres,
@@ -114,7 +114,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     }}
                 >
                     <img
-                        src={formData.image || book.image || placeholder}
+                        src={formData.coverUrl || book.coverUrl || placeholder}
                         alt="Preview"
                         style={{
                             width: "50%",
@@ -161,14 +161,14 @@ export const ReviewModal = ({book = {}, open, close}) => {
                             />
 
                             <TextField
-                                id="image"
-                                name="image"
+                                id="coverUrl"
+                                name="coverUrl"
                                 label="Image URL"
                                 type="text"
                                 required
                                 fullWidth
                                 size="small"
-                                value={formData.image}
+                                value={formData.coverUrl}
                                 onChange={({target}) =>
                                     setFormData({...formData, [target.name]: target.value})
                                 }

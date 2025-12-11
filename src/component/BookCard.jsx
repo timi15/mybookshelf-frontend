@@ -42,7 +42,7 @@ export const BookCard = ({book, list_name}) => {
                 }}
             >
 
-                {!book.image ? (
+                {!book.coverUrl ? (
                     <Skeleton
                         variant="rectangular"
                         width="100%"
@@ -52,7 +52,7 @@ export const BookCard = ({book, list_name}) => {
                 ) : (
                     <CardMedia
                         component="img"
-                        src={book.image}
+                        src={book.coverUrl}
                         alt={book.title}
                         sx={{
                             width: "100%",

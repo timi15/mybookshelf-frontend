@@ -20,7 +20,6 @@ export const SignUp = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: ''
     });
@@ -28,8 +27,8 @@ export const SignUp = () => {
     const handleSubmitEmailAndPassword = async (e) => {
         e.preventDefault();
         try {
-            const userCredential = await signUpWithEmail(formData.email, formData.password);
-            setFormData({name: '', email: '', password: ''});
+            await signUpWithEmail(formData.email, formData.password);
+            setFormData({email: '', password: ''});
             navigate("/sign-in");
         } catch (error) {
             showAlert(error.message.split(":")[1], 'error');
@@ -62,18 +61,6 @@ export const SignUp = () => {
                 </Typography>
 
                 <TextField
-                    id="name"
-                    name="name"
-                    label="Name"
-                    type="text"
-                    size="small"
-                    variant="outlined"
-                    required
-                    value={formData.name}
-                    onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
-                />
-
-                <TextField
                     id="email"
                     name="email"
                     label="Email"
@@ -88,6 +75,7 @@ export const SignUp = () => {
                 <PasswordField
                     name="password"
                     label="Password"
+                    required={true}
                     value={formData.password}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
@@ -117,7 +105,7 @@ export const SignUp = () => {
                     style={{backgroundColor: "#3a4943"}}
                     onClick={handleSubmitGoogle}>
                     <GoogleIcon className="google-icon" fontSize="medium"/>
-                    Login with Google
+                    continue with Google
                 </Button>
 
             </Box>

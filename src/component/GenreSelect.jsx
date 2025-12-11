@@ -19,7 +19,7 @@ const MenuProps = {
     },
 };
 
-const names = [
+const genres = [
     'Fantasy',
     'Science Fiction',
     'Dystopian',
@@ -41,9 +41,9 @@ const names = [
     'Memoir',
 ];
 
-function getStyles(name, selectedGenres, theme) {
+function getStyles(genre, selectedGenres, theme) {
     return {
-        fontWeight: selectedGenres.includes(name)
+        fontWeight: selectedGenres.includes(genre)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
@@ -84,13 +84,13 @@ export const GenreSelect = ({ value, onChange }) => {
                     )}
                     MenuProps={MenuProps}
                  >
-                    {names.map((name) => (
+                    {genres.map((genre) => (
                         <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, value, theme)}
+                            key={genre}
+                            value={genre}
+                            style={getStyles(genre, value, theme)}
                         >
-                            {name}
+                            {genre}
                         </MenuItem>
                     ))}
                 </Select>
