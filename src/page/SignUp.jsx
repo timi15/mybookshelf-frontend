@@ -31,7 +31,22 @@ export const SignUp = () => {
             setFormData({email: '', password: ''});
             navigate("/sign-in");
         } catch (error) {
-            showAlert(error.message.split(":")[1], 'error');
+
+            console.log(error.code);
+
+            switch (error.code) {
+                case 'auth/weak-password':
+                    showAlert('Password should be at least 6 characters.', 'error');
+                    break;
+                case 'auth/email-already-in-use':
+                    showAlert('An account with this email already exists.', 'error');
+                    break;
+                case 'auth/invalid-email':
+                    showAlert('Please enter a valid email address.', 'error');
+                    break;
+                default:
+                    showAlert('Registration failed. Please try again.', 'error');
+            }
         }
     };
 
@@ -76,6 +91,7 @@ export const SignUp = () => {
                     name="password"
                     label="Password"
                     required={true}
+                    isDisabled={false}
                     value={formData.password}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />

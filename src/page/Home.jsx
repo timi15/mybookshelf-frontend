@@ -14,7 +14,7 @@ export const Home = () => {
         xl: {breakpoint: {max: 1500, min: 1300}, items: 6},
         lg: {breakpoint: {max: 1300, min: 900}, items: 4},
         md: {breakpoint: {max: 900, min: 0}, items: 3},
-        sm: {breakpoint: {max: 600, min: 300}, items: 2},
+        sm: {breakpoint: {max: 800, min: 300}, items: 2},
         xs: {breakpoint: {max: 400, min: 0}, items: 1}
     };
 

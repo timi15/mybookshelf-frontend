@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Playwrite+US+Trad+Guides&display=swap');
+
+.not-found {
+    width: 50%;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    text-align: center;
+    background-color: #f1ecdb;
+    border-radius: 40px;
+}
+
+.error {
+    font-family: "Berkshire Swash", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3.5rem;
+    color: #182929;
+}
+
+.link-to-home{
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+    background-color: #3a4943;
+    padding: 0.6rem;
+    border-radius:30px;
+    width: 35%;
+}
+
+.link-to-home:hover{
+    opacity: 0.9;
+}

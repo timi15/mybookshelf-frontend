@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://p01--my-bookshelf-service--phgz78clhglh.code.run";

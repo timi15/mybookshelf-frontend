@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Box, Button, Modal, Rating, TextField, Typography, Chip } from "@mui/material";
+import {Box, Button, Modal, Rating, TextField, Typography, Chip} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
@@ -18,13 +18,12 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
         rate: 0,
         startDate: "",
         finishDate: "",
-        genres:[],
+        genres: [],
         reflection: "",
     });
 
     useEffect(() => {
         if (!isbn13) return;
-        console.log(currentReview);
         axios
             .get(`${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`, {
                 headers: {
@@ -90,7 +89,7 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                     }}
                 >
                     <img
-                        src={currentReview.book?.image || placeholder}
+                        src={currentReview.book?.coverUrl || placeholder}
                         alt="Preview"
                         style={{
                             width: "50%",
@@ -145,10 +144,10 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                         }
                     />
 
-                    <Box sx={{mb: 4, textAlign:"center"}}>
+                    <Box sx={{mb: 4, textAlign: "center"}}>
                         {
-                           formData.genres?.map((genre) => (
-                                <Chip sx={{marginLeft:"2rem"}} label={genre}/>
+                            formData.genres?.map((genre, index) => (
+                                <Chip key={index} sx={{marginLeft: "2rem"}} label={genre}/>
                             ))
                         }
                     </Box>

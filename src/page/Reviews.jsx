@@ -10,17 +10,22 @@ import {
     Rating,
     Typography
 } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import {ReviewContext} from "../context/review/Review";
-import {ReviewModal} from "../component/ReviewModal";
-import {ModifyReviewModal} from "../component/ModifyReviewModal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {ReviewModal} from "../component/ReviewModal";
+import {ModifyReviewModal} from "../component/ModifyReviewModal";
+import {SearchBar} from "../component/SearchBar";
 import "../assert/css/common.css"
-import Chip from "@mui/material/Chip";
 
 export const Reviews = () => {
 
     const {reviews, handleRemoveReview} = useContext(ReviewContext);
+
+    const [searchResult, setSearchResult] = useState(null);
+
+    const displayed = searchResult || reviews;
 
     const [selectedIsbn13, setSelectedIsbn13] = useState(null);
     const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -33,7 +38,8 @@ export const Reviews = () => {
     const handleCloseModifyModal = () => setOpenModifyModal(false);
 
 
-    return (<>
+    return (
+        <>
             <div style={{textAlign: "center"}}>
                 <Button className="btn" style={{
                     marginTop: "3rem",
@@ -44,8 +50,10 @@ export const Reviews = () => {
                 }} onClick={handleOpenCreateModal}>
                     Create Review
                 </Button>
-
             </div>
+
+            <SearchBar data={reviews} onSearch={setSearchResult} isReview={true}/>
+
             <div className="container" style={{
                 marginTop: "3rem",
                 marginBottom: "3rem",
@@ -55,7 +63,7 @@ export const Reviews = () => {
                 justifyContent: "center"
             }}>
                 {
-                    reviews.map((review) => (
+                    displayed.map((review) => (
                         <Card
                             sx={{
                                 width: 300,
@@ -114,7 +122,7 @@ export const Reviews = () => {
                                     {review.book.title}
                                 </Typography>
 
-                                <Typography variant="subtitle2" sx={{mb: 1}}>
+                                <Typography variant="subtitle2" sx={{mb: 1, fontSize:"1rem"}}>
                                     {review.book.author}
                                 </Typography>
 
@@ -124,8 +132,8 @@ export const Reviews = () => {
 
                                 <Box sx={{mb: 2}}>
                                     {
-                                        review?.genres?.map((genre) => (
-                                            <Chip sx={{marginLeft:"5px"}} label={genre}/>
+                                        review?.genres?.map((genre, index) => (
+                                            <Chip key={index} sx={{marginLeft: "5px"}} label={genre}/>
                                         ))
                                     }
                                 </Box>
@@ -149,7 +157,6 @@ export const Reviews = () => {
 
                                 <Box sx={{flex: 1, display: "flex", justifyContent: "flex-start"}}>
                                     <IconButton
-                                        color="primary"
                                         onClick={() => {
                                             setSelectedIsbn13(review.isbn13);
                                             handleOpenModifyModal();
@@ -157,7 +164,7 @@ export const Reviews = () => {
                                         sx={{
                                             width: '100%',
                                             backgroundColor: "#3a4943",
-                                            color:"white",
+                                            color: "white",
                                             borderRadius: "12px",
                                             padding: "10px",
                                             "&:hover": {backgroundColor: "rgba(108,131,125,0.65)"}
@@ -169,12 +176,13 @@ export const Reviews = () => {
 
                                 <Box sx={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
                                     <IconButton
-                                        color="error"
                                         onClick={() => handleRemoveReview(review.isbn13)}
                                         sx={{
                                             width: '100%',
-                                            backgroundColor: "#3a4943",
-                                            color:"white",
+                                            color: "#3a4943",
+                                            borderColor: "#3a4943",
+                                            borderStyle: "solid",
+                                            borderWidth: 2,
                                             borderRadius: "12px",
                                             padding: "10px",
                                             "&:hover": {backgroundColor: "rgba(108,131,125,0.65)"}

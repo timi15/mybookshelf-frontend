@@ -18,3 +18,30 @@
     font-size: 1.7rem !important;
     margin: 1rem 0 !important;
 }
+
+
+.MuiInputLabel-root {
+    color: #3a4943 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+    color: #3a4943 !important;
+}
+
+.MuiInputBase-input {
+    color: #3a4943 !important;
+}
+
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: #3a4943 !important;
+}
+
+.MuiList-root{
+    background-color: #d0d5d0 !important;
+}
+
+.MuiMenuItem-root{
+    font-family: 'Fira Code', sans-serif !important;
+    font-size: 1rem !important;
+}

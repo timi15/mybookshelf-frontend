@@ -10,11 +10,13 @@ export const DateRangeFields = ({formData, setFormData}) => {
             <TextField
                 id="startDate"
                 name="startDate"
+                label="Start Date"
                 type="date"
                 required
                 fullWidth
                 size="small"
                 value={formData.startDate}
+                InputLabelProps={{ shrink: true }}
                 slotProps={{
                     input: {
                         inputProps: {
@@ -30,11 +32,13 @@ export const DateRangeFields = ({formData, setFormData}) => {
             <TextField
                 id="finishDate"
                 name="finishDate"
+                label="Finish Date"
                 type="date"
                 required
                 fullWidth
                 size="small"
                 value={formData.finishDate}
+                InputLabelProps={{ shrink: true }}
                 slotProps={{
                     input: {
                         inputProps: {

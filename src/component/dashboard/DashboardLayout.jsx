@@ -11,6 +11,9 @@ export const DashboardLayout = ({
                                     genreDonut,
                                     top3GenresTable
                                 }) => {
+
+    const year = new Date().getFullYear();
+
     return (
         <Box
             sx={{
@@ -30,7 +33,7 @@ export const DashboardLayout = ({
                 backgroundColor: "#f1ecdb",
                 borderRadius: 6
             }}>
-                <h3>Annual reading statistics</h3>
+                <h3>Annual reading statistics ({year})</h3>
                 {readingChart}
             </Paper>
 

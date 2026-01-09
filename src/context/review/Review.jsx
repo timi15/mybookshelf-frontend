@@ -39,7 +39,7 @@ export const Review = ({children}) => {
 
     const handleUpdateReview = async (isbn13, review) => {
         setReviews(prev =>
-            prev.map(r => r.isbn13 === isbn13 ? { ...r, ...review } : r)
+            prev.map(r => r.isbn13 === isbn13 ? {...r, ...review} : r)
         );
 
         try {
@@ -58,7 +58,7 @@ export const Review = ({children}) => {
             return true;
 
         } catch (err) {
-            showAlert('Review updated failed.', 'error');
+            showAlert('Failed to update the review.', 'error');
             return false;
         }
     };
@@ -78,7 +78,7 @@ export const Review = ({children}) => {
             return true;
 
         } catch (err) {
-            showAlert('Review removed failed.', 'error');
+            showAlert('Failed to remove the review.', 'error');
             return false;
         }
     };

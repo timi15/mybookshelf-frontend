@@ -10,6 +10,7 @@ import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
 import {Profile} from "./page/Profile";
 import {Dashboard} from "./page/Dashboard";
+import {NotFound} from "./page/NotFound";
 
 function App() {
 
@@ -28,8 +29,10 @@ function App() {
                 <Route path="/to-read" element={<ToRead/>}/>
                 <Route path="/reviews" element={<Reviews/>}/>
                 <Route path="/profile" element={<Profile/>}/>
-                <Route path="/overview" element={<Dashboard/>}/>
+                <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path='*' element={<NotFound/>}/>
             </Route>
+
 
         </Routes>
     );

@@ -45,6 +45,8 @@ export const Profile = () => {
         }
     };
 
+    const isDisable = currentUser.emailVerified === true;
+
     return (
         <>
             <Card sx={{width: "55%", margin: "auto", mt: 7, mb: 7, p: 2, borderRadius: 6, backgroundColor: "#f1ecdb"}}>
@@ -86,6 +88,7 @@ export const Profile = () => {
                             name="password"
                             label="New Password"
                             required={false}
+                            isDisabled={isDisable}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
