@@ -33,13 +33,13 @@ export const Login = () => {
     const handleSubmitEmailAndPassword = async (e) => {
         e.preventDefault();
         try {
-            const userCredential = await signInWithEmail(formData.email, formData.password);
+            await signInWithEmail(formData.email, formData.password);
             setFormData({email: '', password: ''});
-            showAlert('Login successfully', 'success');
+            showAlert('Logged in successfully', 'success');
             navigate("/home");
 
         } catch (error) {
-            showAlert(error.message, 'error');
+            showAlert("Invalid email or password", 'error');
         }
     }
 
@@ -47,11 +47,11 @@ export const Login = () => {
         try {
             await signInWithGoogle();
             if (auth.currentUser) {
-                showAlert('Login successfully', 'success');
+                showAlert('Logged in successfully', 'success');
                 navigate("/home");
             }
         } catch (error) {
-            showAlert(error.message, 'error');
+            showAlert("Google sign-in failed. Please try again later.", 'error');
         }
     }
 
@@ -84,6 +84,7 @@ export const Login = () => {
                     name="password"
                     label="Password"
                     required={true}
+                    isDisabled={false}
                     value={formData.password}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
@@ -91,6 +92,7 @@ export const Login = () => {
                 <div style={{textAlign: 'right'}}>
                     <Link
                         component="button"
+                        type="button"
                         variant="body2"
                         underline="hover"
                         onClick={handleOpen}

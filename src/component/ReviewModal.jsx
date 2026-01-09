@@ -5,17 +5,19 @@ import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
 import {BookContext} from "../context/book/Books";
+import {IssueAlertContext} from "../context/IssueAlert";
 import {DateRangeFields} from "./DateRangeFields";
 import {GenreSelect} from "./GenreSelect";
 import {BASE_URL} from "../config/api";
 import placeholder from "../assert/img/placeholder.jpg"
 import "../assert/css/modal.css"
 import "../assert/css/common.css"
-import {IssueAlertContext} from "../context/IssueAlert";
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
     const navigate = useNavigate();
+
+    const placeholderUrl = "https://images.unsplash.com/photo-1755541608494-5c02cf56e1f4?q=80&w=657&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
     const {idToken} = useContext(AuthContext);
     const {handleAddReview} = useContext(ReviewContext);
@@ -66,11 +68,19 @@ export const ReviewModal = ({book = {}, open, close}) => {
             })
             .catch((err) => {
                 if (err.response?.status === 409) {
-                    const errors = err.response.data.errors;
-                    const firstError = Object.values(errors)[0][0];
-                    showAlert(firstError, "error");
+                    showAlert("You have already reviewed this book.", "error");
                 }
+                showAlert('Failed to add the review.', 'error');
             })
+    };
+
+    const isValidUrl = (url) => {
+        try {
+            new URL(url);
+            return true;
+        } catch {
+            return false;
+        }
     };
 
 
@@ -169,9 +179,15 @@ export const ReviewModal = ({book = {}, open, close}) => {
                                 fullWidth
                                 size="small"
                                 value={formData.coverUrl}
+                                InputLabelProps={{shrink: true}}
                                 onChange={({target}) =>
-                                    setFormData({...formData, [target.name]: target.value})
+                                    setFormData({...formData, coverUrl: target.value})
                                 }
+                                onBlur={() => {
+                                    if (!isValidUrl(formData.coverUrl)) {
+                                        setFormData({...formData, coverUrl: placeholderUrl});
+                                    }
+                                }}
                             />
                         </Box>
                     )}

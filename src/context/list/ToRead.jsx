@@ -48,14 +48,15 @@ export const ToRead = ({children}) => {
                     setToReadBooks(prev => [...prev, res.data.book]);
                 });
 
-            showAlert("Book added successfully!", 'success');
+            showAlert("Book successfully added to your to-read list.", 'success');
             return true;
 
         } catch (err) {
             if (err.response?.status === 409) {
-                showAlert(err.response.data.message, "error");
+                showAlert("This book is already in your to-read list.", "error");
             }
 
+            showAlert("Failed to add the book to your to-read list.", "error");
             return false;
         }
     };
@@ -73,11 +74,11 @@ export const ToRead = ({children}) => {
                     }
                 }
             )
-            showAlert("Book removed successfully!", 'success');
+            showAlert("Book removed from your to-read list.", 'success');
             return true;
 
         } catch (err) {
-            showAlert('Book removed failed.', 'error');
+            showAlert('Failed to remove the book from your to-read list.', 'error');
             return false;
         }
     };

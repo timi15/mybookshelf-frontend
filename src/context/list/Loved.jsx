@@ -43,16 +43,17 @@ export const Loved = ({children}) => {
                         }
                     }
                 ).then(res => {
-                    showAlert("Book added successfully!", 'success');
+                    showAlert("Book successfully added to your favorites.", 'success');
                     setLovedBooks(prev => [...prev, res.data.book]);
                 });
                 return true;
 
             } catch (err) {
                 if (err.response?.status === 409) {
-                    showAlert(err.response.data.message, "error");
+                    showAlert("This book is already in your loved list.", "error");
                 }
 
+                showAlert("Failed to add the book to your loved list.", "error");
                 return false;
             }
         }
@@ -71,11 +72,12 @@ export const Loved = ({children}) => {
                     }
                 }
             )
-            showAlert("Book removed successfully!", 'success');
+            showAlert("Book removed from your loved list.", 'success');
             return true;
 
         } catch (err) {
-            showAlert('Book removed failed.', 'error');
+            console.log(err);
+            showAlert('Failed to remove the book from your loved list..', 'error');
             return false;
         }
     };
