@@ -86,6 +86,7 @@ export const GenreSelect = ({ value, onChange }) => {
                  >
                     {genres.map((genre) => (
                         <MenuItem
+                            data-cy={`genre-${genre}`}
                             key={genre}
                             value={genre}
                             style={getStyles(genre, value, theme)}

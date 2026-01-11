@@ -105,6 +105,7 @@ export const Reviews = () => {
                                 }}
                             >
                                 <CardMedia
+                                    data-cy="book-cover"
                                     component="img"
                                     image={review.book.coverUrl}
                                     alt={review.book.title}
@@ -157,6 +158,7 @@ export const Reviews = () => {
 
                                 <Box sx={{flex: 1, display: "flex", justifyContent: "flex-start"}}>
                                     <IconButton
+                                        data-cy="edit-review"
                                         onClick={() => {
                                             setSelectedIsbn13(review.isbn13);
                                             handleOpenModifyModal();
@@ -176,6 +178,7 @@ export const Reviews = () => {
 
                                 <Box sx={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
                                     <IconButton
+                                        data-cy="delete-review"
                                         onClick={() => handleRemoveReview(review.isbn13)}
                                         sx={{
                                             width: '100%',

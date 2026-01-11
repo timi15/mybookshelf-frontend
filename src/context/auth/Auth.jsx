@@ -13,6 +13,9 @@ export const AuthContext = createContext();
 
 export const Auth = ({children}) => {
 
+    const isTest = process.env.NODE_ENV === 'test' || window.Cypress
+    const cyStub = () => Promise.resolve()
+
     const provider = new GoogleAuthProvider();
 
     const [currentUser, setCurrentUser] = useState(null);
@@ -54,6 +57,24 @@ export const Auth = ({children}) => {
         return () => unsubscribe();
     }, []);
 
+    if (isTest) {
+        return (
+            <AuthContext.Provider
+                value={{
+                    currentUser: { uid: 'test-user', email: 'test@test.com' },
+                    idToken: 'test-token',
+                    loading: false,
+                    signUpWithEmail: cyStub,
+                    signInWithEmail: cyStub,
+                    signInWithGoogle: cyStub,
+                    passwordResetEmail: cyStub,
+                    logout: cyStub
+                }}
+            >
+                {children}
+            </AuthContext.Provider>
+        )
+    }
 
     return (
         <AuthContext.Provider
