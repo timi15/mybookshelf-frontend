@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {AuthContext} from "../context/auth/Auth";
+import {AuthContext} from "../../context/auth/Auth";
 import axios from "axios";
-import {BASE_URL} from "../config/api";
-import {AnnualReadingStat} from "../component/dashboard/AnnualReadingStat";
-import {GenreStat} from "../component/dashboard/GenreStat";
-import {Top3GenreTable} from "../component/dashboard/Top3GenreTable";
-import {DashboardLayout} from "../component/dashboard/DashboardLayout";
-import {Top5Book} from "../component/dashboard/Top5Book";
+import {BASE_URL} from "../../config/api";
+import {AnnualReadingStat} from "../../component/dashboard/AnnualReadingStat";
+import {GenreStat} from "../../component/dashboard/GenreStat";
+import {Top3GenreTable} from "../../component/dashboard/Top3GenreTable";
+import {DashboardLayout} from "../../component/dashboard/DashboardLayout";
+import {Top5Book} from "../../component/dashboard/Top5Book";
 import {Skeleton} from "@mui/material";
-import {LastReadBook} from "../component/dashboard/LastReadBook";
+import {LastReadBook} from "../../component/dashboard/LastReadBook";
 
 export const Dashboard = () => {
 

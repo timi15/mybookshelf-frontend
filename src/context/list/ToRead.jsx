@@ -35,7 +35,7 @@ export const ToRead = ({children}) => {
         try {
             await axios
                 .post(
-                    `${BASE_URL}/v1/mybookshelf/to-read/add`,
+                    `${BASE_URL}/v1/mybookshelf/to-read`,
                     book,
                     {
                         headers: {

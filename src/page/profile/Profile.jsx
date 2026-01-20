@@ -7,13 +7,13 @@ import {
     CardContent,
     TextField
 } from "@mui/material";
-import {AuthContext} from "../context/auth/Auth";
-import {PasswordField} from "../component/PasswordField";
+import {AuthContext} from "../../context/auth/Auth";
+import {PasswordField} from "../../component/PasswordField";
 import {
     updatePassword,
     updateProfile
 } from "firebase/auth";
-import {IssueAlertContext} from "../context/IssueAlert";
+import {IssueAlertContext} from "../../context/IssueAlert";
 
 export const Profile = () => {
 

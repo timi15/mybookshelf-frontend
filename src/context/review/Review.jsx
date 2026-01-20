@@ -21,7 +21,7 @@ export const Review = ({children}) => {
         }
 
         axios
-            .get(`${BASE_URL}/v1/mybookshelf/book-review/all`, {
+            .get(`${BASE_URL}/v1/mybookshelf/book-reviews`, {
                 headers: {
                     Authorization: `Bearer ${idToken}`
                 }
@@ -44,7 +44,7 @@ export const Review = ({children}) => {
 
         try {
             await axios.put(
-                `${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`,
+                `${BASE_URL}/v1/mybookshelf/book-reviews/${isbn13}`,
                 review,
                 {
                     headers: {
@@ -68,7 +68,7 @@ export const Review = ({children}) => {
         setReviews(prev => prev.filter((value) => value.isbn13 !== isbn13));
         try {
             await axios
-                .delete(`${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`, {
+                .delete(`${BASE_URL}/v1/mybookshelf/book-reviews/${isbn13}`, {
                     headers: {
                         "Authorization": `Bearer ${idToken}`
                     }

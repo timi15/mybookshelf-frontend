@@ -2,16 +2,16 @@ import React, {useContext, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
-import {AuthContext} from "../context/auth/Auth";
-import {ReviewContext} from "../context/review/Review";
-import {BookContext} from "../context/book/Books";
-import {IssueAlertContext} from "../context/IssueAlert";
-import {DateRangeFields} from "./DateRangeFields";
-import {GenreSelect} from "./GenreSelect";
-import {BASE_URL} from "../config/api";
-import placeholder from "../assert/img/placeholder.jpg"
-import "../assert/css/modal.css"
-import "../assert/css/common.css"
+import {AuthContext} from "../../context/auth/Auth";
+import {ReviewContext} from "../../context/review/Review";
+import {BookContext} from "../../context/book/Books";
+import {IssueAlertContext} from "../../context/IssueAlert";
+import {DateRangeFields} from "../DateRangeFields";
+import {GenreSelect} from "../GenreSelect";
+import {BASE_URL} from "../../config/api";
+import placeholder from "../../assert/img/placeholder.jpg"
+import "../../assert/css/modal.css"
+import "../../assert/css/common.css"
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
@@ -49,7 +49,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
         };
 
         axios
-            .post(`${BASE_URL}/v1/mybookshelf/book-review/save`, submit, {
+            .post(`${BASE_URL}/v1/mybookshelf/book-reviews`, submit, {
                 headers: {
                     "Authorization": `Bearer ${idToken}`,
                     "Content-Type": "application/json"
