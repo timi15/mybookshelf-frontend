@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# 📚 My Bookshelf
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+My Bookshelf is a modern web application that allows users to manage their personal book collection, track reading
+progress, and organize books into custom lists such as **Loved** and **To Read**. The application is designed with a
+clean, user-friendly interface and primarily targets Gen Z users.
 
-## Available Scripts
+This repository contains the **frontend** implementation of the My Bookshelf project.
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- Browse and manage a personal book collection
+- Discover **New York Times Bestseller** books on the home page *(via NYT Books API)*
+- **Community-driven internal book library** that grows as users add reviews
+- Add books to **Loved** and **To Read** lists
+- Create, update, and delete book reviews
+- Dashboard-style overview of reading activity
+- Responsive and modern user interface
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠 Technology Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Framework:** React
+- **Language:** JavaScript *(ES6+)*
+- **UI Library:** Material UI *(MUI)*
+- **State Management:** React Context API
+- **Authentication:** Firebase Authentication
+- **HTTP Client:** Axios
+- **External API:** New York Times Books API
+- **Testing *(E2E)*:** Cypress
+- **Build Tool:** npm *(Create React App)*
+- **Deployment:** GitHub Pages
 
-### `npm test`
+## 🧪 Testing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+End-to-end (E2E) tests are implemented using **Cypress** to ensure the reliability of core user flows and UI
+interactions.
 
-### `npm run build`
+### Running Cypress tests locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Start the application:
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. In a separate terminal, run Cypress::
+   ```bash
+   npx cypress open
+   ```
 
-### `npm run eject`
+    or run tests in headless mode::
+   ```bash
+   npx cypress run
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🌐 Live Demo
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application is deployed using **GitHub Pages** and is publicly available at:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+https://timi15.github.io/mybookshelf/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🔗 Backend Integration
 
-## Learn More
+The frontend communicates with a Spring Boot–based REST API.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The backend source code is available here: [my-bookshelf-backend](https://github.com/timi15/mybookshelf-backend)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📄 License
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the **MIT License**.
