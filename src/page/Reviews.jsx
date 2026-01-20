@@ -14,8 +14,8 @@ import Chip from "@mui/material/Chip";
 import {ReviewContext} from "../context/review/Review";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {ReviewModal} from "../component/ReviewModal";
-import {ModifyReviewModal} from "../component/ModifyReviewModal";
+import {ReviewModal} from "../component/review/ReviewModal";
+import {ModifyReviewModal} from "../component/review/ModifyReviewModal";
 import {SearchBar} from "../component/SearchBar";
 import "../assert/css/common.css"
 

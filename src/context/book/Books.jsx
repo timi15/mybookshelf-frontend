@@ -34,7 +34,7 @@ export const Books = ({children}) => {
     });
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/v1/mybookshelf/book/all`, {
+        axios.get(`${BASE_URL}/v1/mybookshelf/books`, {
             headers: {
                 "Authorization": `Bearer ${idToken}`,
             }

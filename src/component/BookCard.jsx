@@ -9,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
-import {ReviewModal} from "./ReviewModal";
+import {ReviewModal} from "./review/ReviewModal";
 import {LovedBooksContext} from "../context/list/Loved";
 import {BookContext} from "../context/book/Books";
 import {ToReadBooksContext} from "../context/list/ToRead";

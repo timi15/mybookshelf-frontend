@@ -1,15 +1,15 @@
 import {Routes, Route, Navigate} from "react-router-dom";
-import {Layout} from "./component/Layout";
+import {Layout} from "./component/layout/Layout";
 import {Login} from "./page/Login";
 import {SignUp} from "./page/SignUp";
-import {ProtectedRoute} from "./component/ProtectedRoute";
+import {ProtectedRoute} from "./component/layout/ProtectedRoute";
 import {Home} from "./page/Home";
 import {Library} from "./page/Library";
 import {Loved} from "./page/Loved";
 import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
-import {Profile} from "./page/Profile";
-import {Dashboard} from "./page/Dashboard";
+import {Profile} from "./page/profile/Profile";
+import {Dashboard} from "./page/profile/Dashboard";
 import {NotFound} from "./page/NotFound";
 
 function App() {

@@ -34,7 +34,7 @@ export const Loved = ({children}) => {
     const handleAddLovedBook = async (book) => {
             try {
                 await axios.post(
-                    `${BASE_URL}/v1/mybookshelf/loved/add`,
+                    `${BASE_URL}/v1/mybookshelf/loved`,
                     book,
                     {
                         headers: {

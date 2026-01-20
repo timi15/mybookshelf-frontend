@@ -34,30 +34,30 @@ describe('Reviews – CRUD E2E', () => {
 
     beforeEach(() => {
 
-        cy.intercept('GET', '**/book-review/all', {
+        cy.intercept('GET', '**/book-reviews', {
             statusCode: 200,
             body: [review]
         }).as('getReviews')
 
 
-        cy.intercept('GET', '**/book-review/9781538742570', {
+        cy.intercept('GET', '**/book-reviews/9781538742570', {
             statusCode: 200,
             body: review
         }).as('getReview')
 
 
-        cy.intercept('POST', '**/book-review/save', {
+        cy.intercept('POST', '**/book-reviews', {
             statusCode: 201,
             body: secondReview
         }).as('createReview')
 
 
-        cy.intercept('PUT', '**/book-review/9781538742570', {
+        cy.intercept('PUT', '**/book-reviews/9781538742570', {
             statusCode: 200
         }).as('updateReview')
 
 
-        cy.intercept('DELETE', '**/book-review/9781538742570', {
+        cy.intercept('DELETE', '**/book-reviews/9781538742570', {
             statusCode: 204
         }).as('deleteReview')
 
@@ -119,7 +119,7 @@ describe('Reviews – CRUD E2E', () => {
 
         cy.wait('@createReview')
 
-        cy.intercept('GET', '**/book-review/all', {
+        cy.intercept('GET', '**/book-reviews', {
             statusCode: 200,
             body: [review, secondReview]
         }).as('getReviewsAfterCreate')
